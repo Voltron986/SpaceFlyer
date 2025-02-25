@@ -1,0 +1,147 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #1c1c1c;
+    color: #fff;
+    text-align: center;
+}
+
+h1, h2, h3 {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Header Styles */
+header {
+    background-color: #222;
+    padding: 20px;
+}
+
+header .logo h1 {
+    font-size: 3rem;
+    color: #ffcc00;
+}
+
+header .logo p {
+    font-size: 1.2rem;
+    color: #fff;
+    margin-top: 10px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #ffcc00;
+    font-size: 1.2rem;
+    padding: 10px;
+}
+
+nav ul li a:hover {
+    background-color: #444;
+    border-radius: 5px;
+}
+
+/* Intro Section */
+.intro {
+    background-color: #333;
+    padding: 40px 20px;
+}
+
+.intro h2 {
+    color: #ffcc00;
+    font-size: 2.5rem;
+}
+
+.intro p {
+    font-size: 1.2rem;
+}
+
+/* Games Section */
+.games {
+    background-color: #444;
+    padding: 40px 20px;
+}
+
+.game-list {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.game-card {
+    background-color: #555;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+}
+
+.game-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.game-card h3 {
+    margin: 10px 0;
+    font-size: 1.5rem;
+}
+
+.game-card a {
+    text-decoration: none;
+    color: #ffcc00;
+    background-color: #333;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.game-card a:hover {
+    background-color: #ffcc00;
+    color: #333;
+}
+
+/* About Section */
+.about {
+    background-color: #333;
+    padding: 40px 20px;
+}
+
+.about p {
+    font-size: 1.2rem;
+    color: #ddd;
+}
+
+/* Contact Section */
+.contact {
+    background-color: #444;
+    padding: 40px 20px;
+}
+
+.contact p {
+    font-size: 1.2rem;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #222;
+    padding: 20px;
+    color: #fff;
+}
