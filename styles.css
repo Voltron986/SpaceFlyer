@@ -1,147 +1,645 @@
-/* Global Styles */
+/* Adding a subtle text-shadow to headings and paragraphs */
+h1, h2, h3, p {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* A soft shadow */
+}
+
+/* Hero Section Headings */
+.hero-one h1, .hero-two h1 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Dark shadow for contrast */
+}
+
+.hero-one p, .hero-two p {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Lighter shadow for readability */
+}
+
+/* Features Section Text */
+#features h2, #features h3, #features p {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Soft shadow for readability */
+}
+
+
+/* Reset some default browser styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Global Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family:  'Poppins', sans-serif; /* Use Poppins for general text */
     line-height: 1.6;
-    background-color: #1c1c1c;
-    color: #fff;
-    text-align: center;
+    color: #2b2b2b;
 }
 
-h1, h2, h3 {
-    font-family: 'Courier New', Courier, monospace;
-}
-
-/* Header Styles */
+/* Header Section */
 header {
-    background-color: #222;
-    padding: 20px;
+    background: linear-gradient(135deg, #ff7a8c, #ffb3c1);
+    padding: 20px 0;
 }
 
-header .logo h1 {
-    font-size: 3rem;
-    color: #ffcc00;
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-header .logo p {
-    font-size: 1.2rem;
-    color: #fff;
-    margin-top: 10px;
+.logo img {
+    width: 150px; /* Adjust size of logo */
 }
 
 nav ul {
-    list-style: none;
     display: flex;
-    justify-content: center;
-    margin-top: 10px;
+    list-style: none;
 }
 
 nav ul li {
-    margin: 0 20px;
+    margin: 0 15px;
 }
 
 nav ul li a {
     text-decoration: none;
-    color: #ffcc00;
-    font-size: 1.2rem;
-    padding: 10px;
+    color: #b8aeae;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif; /* Montserrat for header links */
+    transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-    background-color: #444;
+    color: #f8b3b9;
+}
+
+.cta-btn {
+    background-color: #ff6f61;
+    padding: 10px 20px;
+    color: rgb(80, 80, 80);
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif; /* Montserrat for buttons */
+    text-transform: uppercase;
+    text-decoration: none;
     border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-/* Intro Section */
-.intro {
-    background-color: #333;
-    padding: 40px 20px;
+.cta-btn:hover {
+    background-color: #ff3d31;
 }
 
-.intro h2 {
-    color: #ffcc00;
-    font-size: 2.5rem;
+/* Hero Section */
+.hero {
+    padding: 80px 0;
+    text-align: center;
+    color: #fff;
+    background-size: cover;
+    background-position: center;
 }
 
-.intro p {
-    font-size: 1.2rem;
+/* Hero One */
+.hero-one {
+    background-image: url('hero-bg-1.jpg'); /* Replace with first hero image */
+    border-bottom: 5px solid rgba(255, 255, 255, 0.3); /* Light border for separation */
 }
 
-/* Games Section */
-.games {
-    background-color: #444;
-    padding: 40px 20px;
-}
-
-.game-list {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-}
-
-.game-card {
-    background-color: #555;
-    border-radius: 10px;
+.hero-one .hero-content {
+    max-width: 700px;
+    margin: 0 auto;
     padding: 20px;
-    width: 250px;
+    position: relative; /* Make sure the background applies only to the content */
+}
+
+.hero-one h1 {
+    font-size: 3.5rem; /* Bigger and bolder heading */
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 15px 30px; /* Larger padding for prominence */
+    border-radius: 25px;
+    font-family: 'Montserrat', sans-serif; /* Sleek, modern font */
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4); /* Strong shadow for readability */
+}
+
+.hero-one p {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #555;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-family: 'Raleway', sans-serif; /* Elegant and modern font for paragraph */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.hero-one .cta-btn {
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    background-color: #ff6f61;
+    color: white;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.hero-one .cta-btn:hover {
+    background-color: #ff3d31;
+}
+
+/* Hero Two */
+.hero-two {
+    background-image: url('hero-bg-2.jpg'); /* Replace with second hero image */
+    background-blur: 10px;
+    border-top: 5px solid rgba(255, 255, 255, 0.3); /* Light border for separation */
+}
+
+.hero-two .hero-content {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+.hero-two h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 15px; /* Reduced margin for a more compact look */
+    color: #333; /* Darker text color for better contrast */
+    background-color: rgba(255, 255, 255, 0.5); /* More transparent */
+    padding: 8px 20px; /* Smaller padding for a smaller bubble */
+    border-radius: 25px; /* More rounded corners */
+}
+
+.hero-two p {
+    font-size: 1.2rem;
+    margin-bottom: 20px; /* Reduced margin for a more compact look */
+    color: #555; /* Darker text color for better readability */
+    background-color: rgb(252, 158, 158); /* More transparent */
+    padding: 8px 20px; /* Smaller padding for a smaller bubble */
+    border-radius: 25px; /* More rounded corners */
+}
+
+.hero-two .cta-btn {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    background-color: #ff6f61;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.hero-two .cta-btn:hover {
+    background-color: #ff3d31;
+}
+
+/* Features Section */
+#features {
+    background-color: #ecb9b9; /* Light background */
+    padding: 60px 0;
     text-align: center;
 }
 
-.game-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
 
-.game-card h3 {
-    margin: 10px 0;
-    font-size: 1.5rem;
-}
-
-.game-card a {
-    text-decoration: none;
-    color: #ffcc00;
-    background-color: #333;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-.game-card a:hover {
-    background-color: #ffcc00;
+#features h2 {
+    font-size: 2.5rem;
     color: #333;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.6); /* Background for the bubble */
+    padding: 10px 20px; /* Smaller padding to reduce the size of the bubble */
+    border-radius: 25px; /* Smaller radius for a less rounded effect */
+    display: inline-block; /* Keeps the bubble shape */
 }
 
-/* About Section */
-.about {
-    background-color: #333;
-    padding: 40px 20px;
+#features p {
+    font-size: 1.1rem;
+    color: #fff; /* Subtitle text color: White */
+    margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Raleway', sans-serif;
+    background-color: rgba(0, 0, 0, 0.4); /* Slightly transparent black background */
+    padding: 10px 20px; /* Padding around the text */
+    border-radius: 8px; /* Rounded corners for a sleek look */
 }
 
-.about p {
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for large screens */
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.feature {
+    background-color: #ff7979;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-10px); /* Slight lift effect on hover */
+}
+
+.feature-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: contain; /* Ensures the aspect ratio is maintained */
+    margin-bottom: 20px;
+}
+
+/* Feature Titles and Text */
+.feature h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.feature p {
+    font-size: 1rem;
+    color: #777;
+    font-family: 'Poppins', sans-serif; /* Clean and readable */
+}
+
+@media (max-width: 768px) {
+    .feature-grid {
+        grid-template-columns: 1fr; /* 1 column for smaller screens */
+    }
+}
+
+/* Success Stories Section */
+#success-stories {
+    background: linear-gradient(135deg, #f7e6e6, #f2d3d3); /* Background color: Light pink gradient */
+    padding: 60px 0;
+    text-align: center;
+    color: #333; /* Default text color */
+}
+
+#success-stories .user-name {
+    position: absolute;        /* Absolute positioning */
     font-size: 1.2rem;
-    color: #ddd;
-}
-
-/* Contact Section */
-.contact {
-    background-color: #444;
-    padding: 40px 20px;
-}
-
-.contact p {
-    font-size: 1.2rem;
-}
-
-/* Footer Styles */
-footer {
-    background-color: #222;
-    padding: 20px;
     color: #fff;
+    background-color: rgba(0, 0, 0, 0.5); /* Transparent background for the name */
+    padding: 10px 20px;
+    border-radius: 8px; /* Rounded corners for a sleek look */
+    margin: 10px 0; /* Space between name bubbles */
+    width: fit-content; /* Ensures the bubble size fits content */
+
+    /* Adjust positioning */
+    left: 40%;   /* Start from the center */
+    transform: translateX(-50%); /* Center horizontally */
+    
+    /* Optional: Move names slightly to the right */
+    left: calc(50% + 100px); /* Move the name bubble 20px to the right */
 }
+
+/* Success Story Item */
+.story-item {
+    margin-bottom: 30px;
+}
+
+/* Success Stories Description */
+.story-description {
+    font-size: 1.2rem;
+    color: #fff;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Raleway', sans-serif;
+    background-color: rgba(0, 0, 0, 0.4); /* Slightly transparent black background */
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+
+/* Success Stories Title */
+#success-stories h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.6); /* Background for the bubble */
+    padding: 10px 20px; /* Smaller padding to reduce the size of the bubble */
+    border-radius: 25px; /* Smaller radius for a less rounded effect */
+    display: inline-block; /* Keeps the bubble shape */
+}
+
+
+
+/* Success Stories - Paragraph Left Shift */
+#success-stories p {
+    font-size: 1.1rem;
+    color: #fff; /* Subtitle text color: White */
+    margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Raleway', sans-serif;
+    background-color: rgba(0, 0, 0, 0.4); /* Slightly transparent black background */
+    padding: 10px 20px; /* Padding around the text */
+    border-radius: 8px; /* Rounded corners for a sleek look */
+}
+
+
+/* Success Stories Grid (no changes to layout) */
+.stories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for larger screens */
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Story Card (individual user story) */
+.story-card {
+    background-color: #fff; /* White background for each story card */
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Light gray box shadow */
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect on story card */
+.story-card:hover {
+    transform: translateY(-10px); /* Hover effect: Lift the card */
+}
+
+/* User photo */
+.story-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* Light shadow on images */
+}
+
+/* Quote styling */
+blockquote {
+    font-size: 1.2rem;
+    color: #555; /* Quote text color: Medium gray */
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Name Styling */
+.story-name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.8); /* Light background */
+    padding: 10px 20px;
+    border-radius: 25px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Name Styling */
+.story-name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.8); /* Light background */
+    padding: 10px 20px;
+    border-radius: 25px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Mobile Styling */
+@media (max-width: 768px) {
+    .stories-grid {
+        grid-template-columns: 1fr; /* 1 column on small screens */
+    }
+}
+/* How It Works Section */
+#how-it-works {
+    background-color: #f7f7f7; /* Light background */
+    padding: 60px 0;
+    text-align: center;
+    position: relative; /* Container for absolute positioning */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative; /* Keeps child elements with absolute positioning relative to this container */
+}
+
+.header {
+    position: relative; /* To position h2 and p inside independently */
+}
+
+#how-it-works h2 {
+    font-size: 2.5rem;
+    color: #333;
+    background-color: rgba(0, 0, 0, 0.5); /* Transparent background */
+    padding: 10px 20px;
+    border-radius: 8px;
+    position: absolute; /* Allows movement independently of other elements */
+    top: 0; /* Initially positioned at the top */
+    left: 150%; /* Start from the center of the container */
+    transform: translateX(-50%); /* Center the element horizontally */
+}
+
+#how-it-works .intro-text {
+    font-size: 1.2rem;
+    color: #7e7a7a;
+    margin-top: 10px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Raleway', sans-serif;
+    position: absolute; /* Allows movement independently of other elements */
+    top: 80px; /* Move it below the h2 */
+    left: 50%; /* Start from the center */
+    transform: translateX(-50%); /* Center the element horizontally */
+}
+
+.steps {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.step {
+    background-color: #a5a5a5;
+    border-radius: 15px;
+    padding: 60px;
+    box-shadow: 0 4px 10px rgba(14, 13, 13, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+    flex: 1;
+
+    /* Move the step to the left */
+    margin-left: -0px; /* Adjust this value to move further left */
+}
+
+
+/* Specific Step Styles */
+.step.getting-started {
+    background-color: #ffb3b3; /* Light pink bubble */
+}
+
+
+.step.create-profile {
+    background-color: #ff7a8c; /* Stronger pink for Create Profile */
+}
+
+.step.find-matches {
+    background-color: #ff4c4c; /* Slightly darker red-pink */
+}
+
+.step.connect {
+    background-color: #ff6666; /* Another shade of red-pink */
+}
+
+
+.step:hover {
+    transform: translateY(-10px); /* Lift effect on hover */
+}
+
+.step-icon {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+/* Specific style for the 'Choose Your Plan' step */
+.step.choose-plan {
+    background-color: #ff6666; /* Another shade of red-pink */
+    margin-left: 200px; /* Adjust this value to move the "Choose Your Plan" bubble to the left */
+}
+
+
+
+@media (max-width: 768px) {
+    .steps {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step {
+    background-color: #fff; /* White bubble */
+    padding: 20px; /* Adds padding inside the bubble */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Slight shadow for effect */
+}
+}
+/* Membership Plans Section */
+#membership-plans {
+    background-color: #f8f8f8; /* Light background */
+    padding: 60px 0;
+    text-align: center;
+  }
+
+
+  #membership-plans h2 {
+    font-size: 2.5rem;
+    color: #383838;
+    margin-bottom: 40px;
+    background-color: rgba(226, 220, 220, 0.4);
+    padding: 10px 20px;
+    border-radius: 20px;
+  }
+  
+  #membership-plans .intro-text {
+    font-size: 1.1rem;
+    color: #b9b9b9;
+    margin-bottom: 2px;
+    max-width: 200px;
+    margin-left: 5;
+    margin-right: 5;
+  }
+  
+  /* Pricing Table */
+  .pricing-table {
+    display: flex;
+    justify-content: right;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 2 auto;
+  }
+  
+  .plan {
+    background-color: #8f8f8f;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    
+    transition: transform 0.3s ease;
+  }
+  
+  .plan:hover {
+    transform: translateY(-10px);
+  }
+  
+  .plan h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #000000;
+    
+  }
+  
+  .plan .price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fa402f; /* Highlighted price color */
+    margin-bottom: 20px;
+  }
+  
+  .plan ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+    font-size: 1rem;
+    color: #313131;
+  }
+  
+  .plan ul li {
+    margin-bottom: 10px;
+  }
+  
+  .cta-container {
+    margin-top: 20px;
+  }
+  
+  .cta-btn {
+    background-color: #ff6f61;
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-btn:hover {
+    background-color: #ff3d31;
+  }
+  
+  @media (max-width: 768px) {
+    .pricing-table {
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+  
