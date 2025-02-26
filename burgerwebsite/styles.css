@@ -1,0 +1,777 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans', sans-serif;
+ }
+ 
+ 
+ 
+ /* General Reset */
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+ 
+ /* Body Styling */
+ body {
+     font-family: 'Arial', sans-serif;
+     background-color: #1c1c1c; /* Dark background */
+     color: white;
+ }
+ 
+ /* Header Section */
+ .header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 20px 40px;
+     background-color: #121212; /* Dark background for header */
+     position: fixed;
+     width: 100%;
+     top: 0;
+     left: 0;
+     z-index: 100;
+ }
+ 
+ /* Logo Section */
+ .logo img {
+     height: 50px;
+ }
+ 
+ /* Navigation Menu */
+ .nav ul {
+     list-style: none;
+     display: flex;
+ }
+ 
+ .nav ul li {
+     margin-right: 20px;
+ }
+ 
+ .nav ul li a {
+     text-decoration: none;
+     color: #ffffff;
+     font-size: 18px;
+     transition: color 0.3s ease;
+ }
+ 
+ .nav ul li a:hover {
+     color: #f9a825; /* Golden color when hovered */
+ }
+ 
+ /* CTA Button */
+ .cta .order-btn {
+     background-color: #f9a825; /* Golden color for CTA */
+     color: #121212;
+     padding: 12px 24px;
+     text-decoration: none;
+     border-radius: 5px;
+     font-size: 16px;
+     transition: background-color 0.3s ease;
+ }
+ 
+ .cta .order-btn:hover {
+     background-color: #ffca28; /* Lighter golden color on hover */
+ }
+ 
+ /* Mobile Menu (Hamburger Icon) */
+ .mobile-menu {
+     display: none;
+     font-size: 30px;
+     color: white;
+ }
+ 
+ /* Media Query for Mobile */
+ @media (max-width: 768px) {
+     .nav {
+         display: none;
+     }
+     .mobile-menu {
+         display: block;
+     }
+     .header {
+         padding: 10px 20px;
+     }
+ }
+ 
+ /* General Reset */
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+ 
+ /* Body Styling */
+ body {
+     font-family: 'Arial', sans-serif;
+     background-color: #1c1c1c; /* Dark background */
+     color: white;
+ }
+ 
+ /* Hero Section */
+ .hero {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 100vh; /* Full viewport height */
+     background-image: url('burger1.jpg'); /* Replace with your image */
+     background-size: cover;
+     background-position: center;
+     position: relative;
+ }
+ 
+ /* Dark overlay for the background image */
+ .hero::after {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+ }
+ 
+ /* Hero Content */
+ .hero-content {
+     position: relative;
+     text-align: center;
+     z-index: 1;
+     color: white;
+ }
+ 
+ /* Hero Heading */
+ .hero-heading {
+     font-size: 50px;
+     font-weight: bold;
+     margin-bottom: 20px;
+     text-transform: uppercase;
+     letter-spacing: 2px;
+ }
+ 
+ /* Hero Subheading */
+ .hero-subheading {
+     font-size: 20px;
+     margin-bottom: 30px;
+     line-height: 1.6;
+ }
+ 
+ /* CTA Button */
+ .cta-btn {
+     background-color: #f9a825; /* Golden color */
+     color: #121212; /* Dark text color */
+     padding: 15px 30px;
+     text-decoration: none;
+     border-radius: 5px;
+     font-size: 18px;
+     text-transform: uppercase;
+     letter-spacing: 1px;
+     transition: background-color 0.3s ease;
+ }
+ 
+ .cta-btn:hover {
+     background-color: #ffca28; /* Lighter golden color on hover */
+ }
+ 
+ /* General Reset */
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+ 
+ /* Body Styling */
+ body {
+     font-family: 'Arial', sans-serif;
+     background-color: #1c1c1c; /* Dark background */
+     color: white;
+ }
+ 
+/* About Us Section */
+.about-us {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px;
+    background: none
+}
+ 
+ /* About Content Layout */
+ .about-content {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     max-width: 1200px;
+     width: 100%;
+ }
+ 
+ /* About Text */
+ .about-text {
+     flex: 1;
+     margin-right: 20px;
+ }
+ 
+ .about-text h2 {
+     font-size: 36px;
+     color: #20201f; /* Golden color for the heading */
+     margin-bottom: 20px;
+     text-transform: uppercase;
+ }
+ 
+ .about-text p {
+     font-size: 18px;
+     line-height: 1.6;
+     color: #20201f; /* Golden color for the heading */
+     ; /* Light grey for text */
+ }
+ 
+ /* About Image */
+ .about-image {
+     flex: 1;
+ }
+ 
+ .about-image img {
+     width: 100%;
+     height: auto;
+     border-radius: 8px; /* Rounded corners for the image */
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for the image */
+ }
+ 
+ /* Mobile Responsiveness */
+ @media (max-width: 768px) {
+     .about-content {
+         flex-direction: column;
+         text-align: center;
+     }
+     .about-image img {
+         width: 80%; /* Make the image smaller on mobile */
+         margin-top: 20px;
+     }
+ }
+ 
+ /* General Reset */
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+ 
+ /* Body Styling */
+ body {
+     font-family: 'Arial', sans-serif;
+     background-color: #1c1c1c; /* Dark background */
+     color: white;
+ }
+ 
+/* Featured Burgers Section */
+.featured-burgers {
+    padding: 80px 20px;
+    background: transparent; /* More extreme Orange to Red Gradient */
+    text-align: center;
+}
+ 
+ .section-title {
+     font-size: 36px;
+     background-color: rgb(32, 32, 32); /* Light semi-transparent white background */
+     padding: 10px; /* Add space around the text */
+     border-radius: 5px; /* Optional: gives rounded corners to the background */
+     display: inline-block; /* Ensures the background wraps only around the text */
+     color: #f9a825; /* Golden color for the heading */
+     margin-bottom: 40px;
+     text-transform: uppercase;
+ }
+ 
+ /* Burger Grid */
+ .burger-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+     gap: 30px;
+     max-width: 1200px;
+     margin: 0 auto;
+ }
+ 
+ /* Individual Burger Item */
+ .burger-item {
+     background-color: #1f1f1f; /* Slightly lighter dark background */
+     border-radius: 8px;
+     padding: 20px;
+     text-align: center;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for the items */
+     transition: transform 0.3s ease;
+ }
+ 
+ .burger-item:hover {
+     transform: translateY(-10px); /* Hover effect to lift the item */
+ }
+ 
+ .burger-item img {
+     width: 100%;
+     height: auto;
+     border-radius: 8px;
+     margin-bottom: 20px;
+ }
+ 
+ .burger-item h3 {
+     font-size: 24px;
+     color: #f9a825; /* Golden color for burger names */
+     margin-bottom: 10px;
+ }
+ 
+ .burger-description {
+     font-size: 16px;
+     color: #e0e0e0; /* Light grey for description */
+     margin-bottom: 15px;
+ }
+ 
+ .burger-price {
+     font-size: 18px;
+     color: #ffffff;
+     font-weight: bold;
+     margin-bottom: 20px;
+ }
+ 
+ .cta-btn {
+     background-color: #f9a825; /* Golden color for CTA */
+     color: #121212; /* Dark text color */
+     padding: 12px 24px;
+     text-decoration: none;
+     border-radius: 5px;
+     font-size: 16px;
+     text-transform: uppercase;
+     transition: background-color 0.3s ease;
+ }
+ 
+ .cta-btn:hover {
+     background-color: #ffca28; /* Lighter golden color on hover */
+ }
+ 
+ /* Mobile Responsiveness */
+ @media (max-width: 768px) {
+     .section-title {
+         font-size: 28px;
+     }
+ 
+     .burger-item {
+         padding: 15px;
+     }
+ 
+     .burger-item h3 {
+         font-size: 22px;
+     }
+ 
+     .burger-item p {
+         font-size: 14px;
+     }
+ }
+ 
+ /* General Reset */
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+ 
+ /* Body Styling */
+ body {
+     font-family: 'Arial', sans-serif;
+     background-color: #1c1c1c; /* Dark background */
+     color: white;
+ }
+ 
+/* Special Offers Section */
+.special-offers {
+    padding: 80px 20px;
+    background: transparent; /* More extreme Orange to Red Gradient */
+    text-align: center;
+}
+ 
+ .section-title {
+     font-size: 36px;
+     color: #f9a825; /* Golden color for the heading */
+     margin-bottom: 40px;
+     text-transform: uppercase;
+ }
+ 
+ /* Offers Grid */
+ .offers-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+     gap: 30px;
+     max-width: 1200px;
+     margin: 0 auto;
+ }
+ 
+ /* Individual Offer Item */
+ .offer-item {
+     background-color: #1f1f1f; /* Slightly lighter dark background */
+     border-radius: 8px;
+     padding: 20px;
+     text-align: center;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for the items */
+     transition: transform 0.3s ease;
+ }
+ 
+ .offer-item:hover {
+     transform: translateY(-10px); /* Hover effect to lift the item */
+ }
+ 
+ .offer-item h3 {
+     font-size: 24px;
+     color: #f9a825; /* Golden color for offer titles */
+     margin-bottom: 10px;
+ }
+ 
+ .offer-description {
+     font-size: 16px;
+     color: #e0e0e0; /* Light grey for description */
+     margin-bottom: 15px;
+ }
+ 
+ .cta-btn {
+     background-color: #f9a825; /* Golden color for CTA */
+     color: #121212; /* Dark text color */
+     padding: 12px 24px;
+     text-decoration: none;
+     border-radius: 5px;
+     font-size: 16px;
+     text-transform: uppercase;
+     transition: background-color 0.3s ease;
+ }
+ 
+ .cta-btn:hover {
+     background-color: #ffca28; /* Lighter golden color on hover */
+ }
+ 
+ /* Mobile Responsiveness */
+ @media (max-width: 768px) {
+     .section-title {
+         font-size: 28px;
+     }
+ 
+     .offer-item {
+         padding: 15px;
+     }
+ 
+     .offer-item h3 {
+         font-size: 22px;
+     }
+ 
+     .offer-item p {
+         font-size: 14px;
+     }
+ }
+ 
+ /* General Reset */
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+ 
+ /* Body Styling */
+ body {
+     font-family: 'Arial', sans-serif;
+     background-color: #1c1c1c; /* Dark background */
+     color: white;
+ }
+ 
+/* Testimonials Section */
+.testimonials {
+    padding: 80px 20px;
+    background: transparent; /* More extreme Orange to Red Gradient */
+    text-align: center;
+}
+ 
+ .section-title {
+     font-size: 36px;
+     color: #f9a825; /* Golden color for the heading */
+     margin-bottom: 40px;
+     text-transform: uppercase;
+ }
+ 
+ /* Testimonials Grid */
+ .testimonials-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+     gap: 30px;
+     max-width: 1200px;
+     margin: 0 auto;
+ }
+ 
+ /* Individual Testimonial Item */
+ .testimonial-item {
+     background-color: #1f1f1f; /* Slightly lighter dark background */
+     border-radius: 8px;
+     padding: 20px;
+     text-align: center;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for the items */
+     transition: transform 0.3s ease;
+ }
+ 
+ .testimonial-item:hover {
+     transform: translateY(-10px); /* Hover effect to lift the item */
+ }
+ 
+ .testimonial-text {
+     font-size: 18px;
+     color: #e0e0e0; /* Light grey for testimonial text */
+     margin-bottom: 20px;
+     font-style: italic;
+ }
+ 
+ .customer-name {
+     font-size: 20px;
+     font-weight: bold;
+     color: #f9a825; /* Golden color for the customer name */
+     margin-bottom: 5px;
+ }
+ 
+ .customer-role {
+     font-size: 14px;
+     color: #777; /* Light grey for the customer role */
+ }
+ 
+ /* Mobile Responsiveness */
+ @media (max-width: 768px) {
+     .section-title {
+         font-size: 28px;
+     }
+ 
+     .testimonial-item {
+         padding: 15px;
+     }
+ }
+ 
+     
+ /* General Reset */
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+ 
+ /* Body Styling */
+ body {
+     font-family: 'Arial', sans-serif;
+     background-color: #1c1c1c; /* Dark background */
+     color: white;
+ }
+ 
+ /* General Reset */
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+ 
+ /* Body Styling */
+ body {
+     font-family: 'Arial', sans-serif;
+     background-color: #1c1c1c; /* Dark background */
+     color: white;
+ }
+ 
+ /* Ensure body and html take the full width and height of the screen */
+ html, body {
+     width: 100%;
+     height: 100%;
+     margin: 0;
+     padding: 0;
+ }
+ 
+/* Location & Hours Section */
+.location-hours {
+    padding: 80px 20px;
+    background: transparent; /* More extreme Orange to Red Gradient */
+    text-align: center;
+}
+ 
+ /* Location & Hours Container */
+ .location-container {
+     display: flex;
+     justify-content: center; /* Center items horizontally */
+     align-items: center; /* Center items vertically */
+     gap: 40px;
+     max-width: 1200px;
+     margin: 0 auto;
+     flex-wrap: wrap; /* Allow wrapping on smaller screens */
+ }
+ 
+ /* Individual Location and Hours Info */
+ .location-info, .hours-info {
+     background-color: #1f1f1f; /* Slightly lighter dark background */
+     border-radius: 8px;
+     padding: 20px;
+     max-width: 450px;
+     text-align: left;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+     margin: 0 auto; /* Center the container */
+ }
+ 
+ /* For responsiveness, adjust text sizes and layout for mobile */
+ @media (max-width: 768px) {
+     .location-container {
+         flex-direction: column; /* Stack items on smaller screens */
+         text-align: center; /* Center text on mobile */
+     }
+ 
+     .location-info, .hours-info {
+         max-width: 100%; /* Ensure full width on mobile */
+         margin-bottom: 20px; /* Space between items on mobile */
+     }
+ }
+ 
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(45deg, #f31d21, #f86f38, #f8cb38 ); /* Fire effect gradient */
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite; /* Smooth gradient animation */
+    color: white;
+    height: 100%;
+    min-height: 100vh;
+}
+
+
+
+/* Add any other necessary styles for your sections, like padding and margins, if needed */
+
+/* Animation for Gradient Background */
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Header Section */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: linear-gradient(135deg, #555555, #1f1e1e); /* More extreme Orange to Red Gradient */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+/* Footer Section (Keep the original gradient for the footer) */
+.footer {
+    background: trans; /* More extreme Orange to Red Gradient */
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* Footer Container */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+/* Footer Info */
+.footer-info {
+    flex: 1;
+    max-width: 300px;
+    margin-right: 40px;
+    text-align: left;
+}
+
+.footer-logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.footer-description {
+    font-size: 16px;
+    color: #e0e0e0;
+}
+
+/* Footer Navigation Links */
+.footer-nav {
+    flex: 1;
+    max-width: 300px;
+    margin-right: 40px;
+    text-align: left;
+}
+
+.footer-heading {
+    font-size: 24px;
+    color: #f9a825;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.footer-nav ul {
+    list-style: none;
+}
+
+.footer-nav ul li {
+    margin-bottom: 10px;
+}
+
+.footer-nav ul li a {
+    text-decoration: none;
+    color: #e0e0e0;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.footer-nav ul li a:hover {
+    color: #f9a825;
+}
+
+/* Footer Social Media Links */
+.footer-social {
+    flex: 1;
+    max-width: 300px;
+    text-align: left;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #f9a825;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.social-icon:hover {
+    background-color: #ffca28; /* Lighter golden color */
+}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burger Hut</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+     <!-- The flickering background element -->
+     <div class="flickering-bg"></div>
+     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Your Page Title</title>
+        <style>
+            /* Fire Flickering Gradient */
+            .flickering-bg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(45deg, rgba(255, 87, 34, 0.6), rgba(255, 193, 7, 0.6), rgba(255, 87, 34, 0.6), rgba(255, 64, 129, 0.5));
+                background-size: 400% 400%;
+                animation: flicker 2s ease-in-out infinite;
+                z-index: -1; /* Ensures the background stays behind content */
+            }
+    
+            /* Flickering Effect */
+            @keyframes flicker {
+                0% {
+                    background-position: 0% 0%;
+                    opacity: 0.8;
+                }
+                25% {
+                    background-position: 25% 25%;
+                    opacity: 1;
+                }
+                50% {
+                    background-position: 50% 50%;
+                    opacity: 0.7;
+                }
+                75% {
+                    background-position: 75% 75%;
+                    opacity: 1;
+                }
+                100% {
+                    background-position: 100% 100%;
+                    opacity: 0.8;
+                }
+            }
+        </style>
+    </head>
+    
+    <!-- Header Section -->
+    <header class="header">
+        <div class="logo">
+            <img src="logo.jpg" alt="Burger Hut Logo">
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#order">Order Online</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+        <div class="cta">
+            <a href="#order" class="order-btn">Order Now</a>
+        </div>
+        <!-- Mobile Menu (Hamburger Icon) -->
+        <div class="mobile-menu">
+            <span class="menu-icon">&#9776;</span>
+        </div>
+    </header>
+</body>
+</html>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-heading">Savor the Best Burgers in Town</h1>
+            <p class="hero-subheading">Juicy, Delicious, and Fresh - Made to Satisfy Your Cravings</p>
+            <a href="#menu" class="cta-btn">Browse Our Menu</a>
+        </div>
+    </section>
+
+</body>
+</html>
+
+ <!-- About Us Section -->
+    <section class="about-us">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Who We Are</h2>
+                <p>
+                    At Burger Shop, we started with a simple mission: to serve the juiciest, most flavorful burgers made with the finest ingredients. 
+                    Our team is passionate about delivering delicious meals that bring smiles to every table. Whether you're here for a quick bite or a leisurely meal, we promise an unforgettable experience with every bite.
+                </p>
+            </div>
+            <div class="about-image">
+                <img src="logo.jpg" alt="Burger Hut team or restaurant">
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+
+    <!-- Featured Burgers Section -->
+    <section class="featured-burgers">
+        <h2 class="section-title">Our Signature Burgers</h2>
+        <div class="burger-grid">
+            <!-- Burger 1 -->
+            <div class="burger-item">
+                <img src="burger1.jpg" alt="Cheddar Bacon Burger">
+                <h3>Single Savory Burger</h3>
+                <p class="burger-description">Smoky, cheesy goodness in every bite.</p>
+                <p class="burger-price">$8.99</p>
+                <a href="#order" class="cta-btn">Order Now</a>
+            </div>
+
+            <!-- Burger 2 -->
+            <div class="burger-item">
+                <img src="burger2.jpg" alt="Spicy BBQ Burger">
+                <h3>Savory Double Burger</h3>
+                <p class="burger-description">A perfect blend of spice and sweetness.</p>
+                <p class="burger-price">$9.49</p>
+                <a href="#order" class="cta-btn">Order Now</a>
+            </div>
+
+            <!-- Burger 3 -->
+            <div class="burger-item">
+                <img src="burger3.jpg" alt="Classic Cheeseburger">
+                <h3>Savory Veggie burger</h3>
+                <p class="burger-description">A timeless classic that never disappoints.</p>
+                <p class="burger-price">$7.99</p>
+                <a href="#order" class="cta-btn">Order Now</a>
+            </div>
+
+            <!-- Burger 4 -->
+            <div class="burger-item">
+                <img src="burger4.jpg" alt="Veggie Deluxe Burger">
+                <h3>Savory Grass Fed Burger</h3>
+                <p class="burger-description">A hearty veggie patty with all the fixings.</p>
+                <p class="burger-price">$8.49</p>
+                <a href="#order" class="cta-btn">Order Now</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+
+    <!-- Special Offers Section -->
+    <section class="special-offers">
+        <h2 class="section-title">Special Offers</h2>
+        <div class="offers-grid">
+            <!-- Offer 1 -->
+            <div class="offer-item">
+                <h3>Buy 1 Get 1 Free!</h3>
+                <p class="offer-description">Enjoy a free burger with every purchase of a signature burger. Limited time offer!</p>
+                <a href="#order" class="cta-btn">Order Now</a>
+            </div>
+
+            <!-- Offer 2 -->
+            <div class="offer-item">
+                <h3>Combo Deal: Burger + Fries</h3>
+                <p class="offer-description">Get a delicious burger and crispy fries for only $12.99. A perfect combo!</p>
+                <a href="#order" class="cta-btn">Order Now</a>
+            </div>
+
+            <!-- Offer 3 -->
+            <div class="offer-item">
+                <h3>Family Pack - 4 Burgers</h3>
+                <p class="offer-description">Family meal deal! Get 4 of our signature burgers for just $29.99.</p>
+                <a href="#order" class="cta-btn">Order Now</a>
+            </div>
+
+            <!-- Offer 4 -->
+            <div class="offer-item">
+                <h3>Free Drink with Any Burger</h3>
+                <p class="offer-description">Grab any burger and enjoy a free drink of your choice. Don't miss out!</p>
+                <a href="#order" class="cta-btn">Order Now</a>
+            </div>
+
+            <!-- Offer 5 -->
+            <div class="offer-item">
+                <h3>Student Discount</h3>
+                <p class="offer-description">Show your student ID and get 15% off on all burgers. Just for students!</p>
+                <a href="#order" class="cta-btn">Order Now</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+
+
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <h2 class="section-title">What Our Customers Say</h2>
+        <div class="testimonials-grid">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-item">
+                <p class="testimonial-text">"The best burgers I’ve ever had! The flavors are out of this world. I'll definitely be coming back for more!"</p>
+                <p class="customer-name">John Doe</p>
+                <p class="customer-role">Food Lover</p>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-item">
+                <p class="testimonial-text">"Such a great place! The service was fast, and the food was amazing. Highly recommend!"</p>
+                <p class="customer-name">Jane Smith</p>
+                <p class="customer-role">Regular Customer</p>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-item">
+                <p class="testimonial-text">"Delicious, juicy burgers with the best toppings! I can’t wait to bring my friends here!"</p>
+                <p class="customer-name">Michael Brown</p>
+                <p class="customer-role">Burger Enthusiast</p>
+            </div>
+
+            <!-- Testimonial 4 -->
+            <div class="testimonial-item">
+                <p class="testimonial-text">"I’m hooked on their special BBQ burger! Excellent flavors and a must-try for anyone who loves burgers!"</p>
+                <p class="customer-name">Sarah Lee</p>
+                <p class="customer-role">Food Critic</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+
+
+
+
+<section class="location-hours">
+    <h2 class="section-title">Find Us & Hours</h2>
+    <div class="location-container">
+        <!-- Location Information -->
+        <div class="location-info">
+            <h3 class="location-title">Location</h3>
+            <p class="address">123 Street Name, City, State</p>
+            <p class="location-description">Come visit us during business hours for a great experience!</p>
+        </div>
+
+        <!-- Hours Information -->
+        <div class="hours-info">
+            <h3 class="hours-title">Our Hours</h3>
+            <ul class="hours-list">
+                <li><span>Monday - Friday:</span> 9 AM - 6 PM</li>
+                <li><span>Saturday:</span> 10 AM - 4 PM</li>
+                <li><span>Sunday:</span> Closed</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Footer Logo and Info -->
+        <div class="footer-info">
+            <img src="logo.jpg" alt="Burger Hut Logo" class="footer-logo"> <!-- Replace with your logo -->
+            <p class="footer-description">Serving the best burgers in town! Come visit us for a delicious experience.</p>
+        </div>
+
+        <!-- Footer Navigation Links -->
+        <div class="footer-nav">
+            <h3 class="footer-heading">Quick Links</h3>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Menu</a></li>
+                <li><a href="#">Special Offers</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <!-- Footer Social Media Links -->
+        <div class="footer-social">
+            <h3 class="footer-heading">Follow Us</h3>
+            <div class="social-links">
+                <a href="#" class="social-icon">FB</a>
+                <a href="#" class="social-icon">IG</a>
+                <a href="#" class="social-icon">TW</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+        <p>&copy; 2025 Burger Shop. All rights reserved.</p>
+    </div>
+</footer>
+
+
+
+        <!-- Background Layer (Flickering Fire) -->
+     <div class="flickering-bg"></div>
+
+  <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <img src="logo.jpg" alt="Burger Logo">
+        </div>
+        <div class="nav">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Menu</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="cta">
+            <a href="#" class="order-btn">Order Now</a>
+        </div>
+    </div>
