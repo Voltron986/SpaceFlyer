@@ -78,7 +78,7 @@
             font-family: Arial, sans-serif;
             z-index: 3;
         }
-        #controlsButton, #godModeToggle, #unlockWeaponsToggle {
+        #controlsButton, #godModeToggle, #unlockWeaponsToggle, .difficultyButton {
             padding: 10px 20px;
             font-size: 16px;
             background-color: #2a7e7a;
@@ -100,7 +100,7 @@
             margin-top: 10px;
             display: block;
         }
-        #controlsButton:hover, #godModeToggle:hover, #unlockWeaponsToggle:hover, #controlToggle:hover {
+        #controlsButton:hover, #godModeToggle:hover, #unlockWeaponsToggle:hover, #controlToggle:hover, .difficultyButton:hover {
             background-color: #45a049;
         }
         #pauseButton {
@@ -225,6 +225,11 @@
         <button id="controlsButton">Controls</button>
         <button id="godModeToggle">Enable God Mode</button>
         <button id="unlockWeaponsToggle">Unlock All Weapons</button>
+        <p>Difficulty:</p>
+        <button class="difficultyButton" data-difficulty="easy">Easy</button>
+        <button class="difficultyButton" data-difficulty="medium">Medium</button>
+        <button class="difficultyButton" data-difficulty="hard">Hard</button>
+        <button class="difficultyButton" data-difficulty="superInsane">Super Insane</button>
     </div>
     <div id="controlsMenu">
         <p>Current Controls:</p>
@@ -271,6 +276,7 @@
         const ctx = canvas.getContext('2d');
         const startButton = document.getElementById('startButton');
         const settingsButton = document.getElementById('settingsButton');
+        const difficultyButtons = document.querySelectorAll('.difficultyButton');
         const settingsMenu = document.getElementById('settingsMenu');
         const controlsButton = document.getElementById('controlsButton');
         const controlsMenu = document.getElementById('controlsMenu');
@@ -312,7 +318,7 @@
         const sounds = [laserSound, missileSound, plasmaSound, boostSound, explosionSound, backgroundMusic, startMusic];
         function updateVolume() {
             const volume = parseFloat(volumeControl.value);
-            const scaledVolume = volume * volume; // Square the volume for more granular control at low levels
+            const scaledVolume = volume * volume;
             sounds.forEach(sound => sound.volume = scaledVolume);
             laserSound.volume = scaledVolume * 0.9;
         }
@@ -327,10 +333,11 @@
         let weaponSwitchTimer = 0;
         let aiBoostDuration = 0;
         let autoStartTimer = null;
-        let useArrowKeys = false; // Default to WASD
-        let godMode = false; // Invincibility mode
-        let unlockAllWeapons = false; // Unlock all weapons toggle
-        let nextBossScore = 1000; // Boss spawns at 1000 points
+        let useArrowKeys = false;
+        let godMode = false;
+        let unlockAllWeapons = false;
+        let nextBossScore = 1000;
+        let difficulty = 'medium'; // Default difficulty
 
         const spaceship = {
             x: 100,
@@ -412,6 +419,13 @@
             settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
             godModeToggle.textContent = godMode ? 'Disable God Mode' : 'Enable God Mode';
             unlockWeaponsToggle.textContent = unlockAllWeapons ? 'Lock All Weapons' : 'Unlock All Weapons';
+        });
+
+        difficultyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                difficulty = button.getAttribute('data-difficulty');
+                settingsMenu.style.display = 'none'; // Close settings menu after selection
+            });
         });
 
         controlsButton.addEventListener('click', () => {
@@ -544,43 +558,74 @@
 
         function spawnEnemy() {
             if (score < 2000 || !boss) {
-                const swarmChance = Math.random() < 0.1;
-                const lingerChance = Math.random() < 0.1;
-                const count = swarmChance ? Math.floor(Math.random() * 2) + 3 : 1;
+                let swarmChance, lingerChance, count, spawnIntervalAdjust;
+                switch (difficulty) {
+                    case 'easy':
+                        swarmChance = 0.05;
+                        lingerChance = 0.05;
+                        count = swarmChance > Math.random() ? 2 : 1;
+                        spawnIntervalAdjust = 90;
+                        break;
+                    case 'medium':
+                        swarmChance = 0.1;
+                        lingerChance = 0.1;
+                        count = swarmChance > Math.random() ? Math.floor(Math.random() * 2) + 3 : 1;
+                        spawnIntervalAdjust = 60;
+                        break;
+                    case 'hard':
+                        swarmChance = 0.15;
+                        lingerChance = 0.15;
+                        count = swarmChance > Math.random() ? Math.floor(Math.random() * 3) + 4 : 1;
+                        spawnIntervalAdjust = 45;
+                        break;
+                    case 'superInsane':
+                        swarmChance = 0.3;
+                        lingerChance = 0.5;
+                        count = swarmChance > Math.random() ? Math.floor(Math.random() * 5) + 6 : 3;
+                        spawnIntervalAdjust = 30;
+                        break;
+                }
+
                 for (let i = 0; i < count; i++) {
+                    const isHeatSeeker = (difficulty === 'superInsane' && Math.random() < 0.1);
                     const enemy = score < 1000 ? {
                         x: canvas.width + i * 40,
                         y: Math.random() * (canvas.height - 20),
                         size: 30,
-                        speed: (2 + Math.random() * 2) * 1.25,
+                        speed: (2 + Math.random() * 2) * (difficulty === 'easy' ? 0.8 : difficulty === 'hard' ? 1.2 : difficulty === 'superInsane' ? 1.5 : 1),
                         targetY: spaceship.y,
                         speedVariationTimer: 0,
                         speedVariationInterval: 60,
-                        damage: 10,
+                        damage: difficulty === 'easy' ? 5 : difficulty === 'medium' ? 10 : difficulty === 'hard' ? 15 : 20,
                         direction: Math.random() < 0.5 ? 1 : -1,
                         waveTimer: 0,
-                        crazyFactor: swarmChance ? Math.random() * 2 + 1 : 1,
-                        isLingering: lingerChance && i === 0,
-                        lingerTimer: lingerChance && i === 0 ? Math.random() * 300 + 300 : 0,
-                        laserCooldown: lingerChance && i === 0 ? 180 : 0
+                        crazyFactor: swarmChance > Math.random() ? Math.random() * 2 + 1 : 1,
+                        isLingering: (difficulty === 'superInsane' || lingerChance > Math.random()) && i === 0,
+                        lingerTimer: (difficulty === 'superInsane' || lingerChance > Math.random()) && i === 0 ? Math.random() * 300 + 300 : 0,
+                        laserCooldown: (difficulty === 'superInsane' || lingerChance > Math.random()) && i === 0 ? 180 : 0,
+                        isHeatSeeker: isHeatSeeker,
+                        heatSeekerCooldown: isHeatSeeker ? 300 : 0
                     } : {
                         x: canvas.width + i * 40,
                         y: Math.random() * (canvas.height / 2),
                         size: 40,
-                        speed: 3 + Math.random() * 2,
-                        baseSpeed: 3 + Math.random() * 2,
+                        speed: (3 + Math.random() * 2) * (difficulty === 'easy' ? 0.8 : difficulty === 'hard' ? 1.2 : difficulty === 'superInsane' ? 1.5 : 1),
+                        baseSpeed: (3 + Math.random() * 2) * (difficulty === 'easy' ? 0.8 : difficulty === 'hard' ? 1.2 : difficulty === 'superInsane' ? 1.5 : 1),
                         moveTimer: 0,
                         moveInterval: 30,
+                        damage: difficulty === 'easy' ? 10 : difficulty === 'medium' ? 15 : difficulty === 'hard' ? 20 : 25,
                         direction: Math.random() < 0.5 ? 1 : -1,
-                        damage: 15,
                         waveTimer: 0,
-                        crazyFactor: swarmChance ? Math.random() * 2 + 1 : 1,
-                        isLingering: lingerChance && i === 0,
-                        lingerTimer: lingerChance && i === 0 ? Math.random() * 300 + 300 : 0,
-                        laserCooldown: lingerChance && i === 0 ? 180 : 0
+                        crazyFactor: swarmChance > Math.random() ? Math.random() * 2 + 1 : 1,
+                        isLingering: (difficulty === 'superInsane' || lingerChance > Math.random()) && i === 0,
+                        lingerTimer: (difficulty === 'superInsane' || lingerChance > Math.random()) && i === 0 ? Math.random() * 300 + 300 : 0,
+                        laserCooldown: (difficulty === 'superInsane' || lingerChance > Math.random()) && i === 0 ? 180 : 0,
+                        isHeatSeeker: isHeatSeeker,
+                        heatSeekerCooldown: isHeatSeeker ? 300 : 0
                     };
                     enemies.push(enemy);
                 }
+                spawnInterval = spawnIntervalAdjust;
             }
         }
 
@@ -591,10 +636,10 @@
                 y: canvas.height / 2,
                 width: 100,
                 height: 80,
-                health: 500,
-                maxHealth: 500,
+                health: 500 * (difficulty === 'easy' ? 0.5 : difficulty === 'medium' ? 1 : difficulty === 'hard' ? 1.5 : 2),
+                maxHealth: 500 * (difficulty === 'easy' ? 0.5 : difficulty === 'medium' ? 1 : difficulty === 'hard' ? 1.5 : 2),
                 laserCooldown: 0,
-                damage: 20
+                damage: 20 * (difficulty === 'easy' ? 0.5 : difficulty === 'medium' ? 1 : difficulty === 'hard' ? 1.5 : 2)
             };
             bossHealthBarContainer.style.display = 'block';
             bossSpawned = true;
@@ -667,7 +712,7 @@
         }
 
         let spawnTimer = 0;
-        const spawnInterval = 60;
+        let spawnInterval = 60;
 
         function aiControl() {
             if (aiMode && !gamePaused) {
@@ -760,6 +805,7 @@
             bossSpawned = false;
             nextBossScore = 1000;
             currentWeapon = 0;
+            difficulty = 'medium'; // Reset to default
             if (!unlockAllWeapons) {
                 weapons[1].unlocked = false;
                 weapons[2].unlocked = false;
@@ -1114,7 +1160,7 @@
                             boss = null;
                             bossSpawned = false;
                             if (aiMode) {
-                                resetGame(); // AI mode resets to start screen after boss defeat
+                                resetGame();
                             }
                         } else {
                             createExplosion(proj.x, proj.y);
@@ -1156,9 +1202,24 @@
                             score: 0,
                             fromPlayer: false
                         });
-                        enemy.laserCooldown = 180;
+                        enemy.laserCooldown = difficulty === 'superInsane' ? 90 : 180;
                     }
                     enemy.laserCooldown--;
+                    if (enemy.isHeatSeeker && enemy.heatSeekerCooldown <= 0) {
+                        projectiles.push({
+                            type: 'missile',
+                            x: enemy.x,
+                            y: enemy.y + enemy.size / 2,
+                            speed: 8,
+                            size: 6,
+                            target: spaceship,
+                            color: 'orange',
+                            score: 0,
+                            fromPlayer: false
+                        });
+                        enemy.heatSeekerCooldown = 300;
+                    }
+                    if (enemy.isHeatSeeker) enemy.heatSeekerCooldown--;
                 } else if (score < 1000) {
                     enemy.y += Math.sin(enemy.waveTimer) * 2 * enemy.crazyFactor + (enemy.y < spaceship.y ? 1 : -1);
                     enemy.speedVariationTimer++;
