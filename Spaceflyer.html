@@ -39,7 +39,7 @@
             0%, 100% { transform: scale(0.9); }
             50% { transform: scale(1.1); }
         }
-        #startButton {
+        #startButton, #settingsButton {
             padding: 20px 40px;
             font-size: 24px;
             background-color: #2a7e7a;
@@ -49,7 +49,58 @@
             cursor: pointer;
             margin: 10px;
         }
-        #startButton:hover {
+        #startButton:hover, #settingsButton:hover {
+            background-color: #45a049;
+        }
+        #settingsMenu {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            font-family: Arial, sans-serif;
+            z-index: 2;
+        }
+        #controlsMenu {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            font-family: Arial, sans-serif;
+            z-index: 3;
+        }
+        #controlsButton, #godModeToggle, #unlockWeaponsToggle {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #2a7e7a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 0;
+            display: block;
+        }
+        #controlToggle {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #2a7e7a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+        }
+        #controlsButton:hover, #godModeToggle:hover, #unlockWeaponsToggle:hover, #controlToggle:hover {
             background-color: #45a049;
         }
         #pauseButton {
@@ -66,7 +117,21 @@
             cursor: pointer;
             z-index: 2;
         }
-        #pauseButton:hover {
+        #quitButton {
+            display: none;
+            position: fixed;
+            bottom: 10px;
+            left: 150px;
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #2a7e7a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 2;
+        }
+        #pauseButton:hover, #quitButton:hover {
             background-color: #45a049;
         }
         #settings {
@@ -95,10 +160,29 @@
         #scoreContainer, #weaponContainer, #healthContainer, #bossHealthContainer {
             margin-bottom: 10px;
         }
-        #scoreDisplay, #weaponDisplay {
+        #scoreDisplay {
             font-size: 18px;
             margin-left: 10px;
             color: #0ff;
+        }
+        #weaponList {
+            margin-top: 5px;
+        }
+        .weaponItem {
+            font-size: 16px;
+            margin: 5px 0;
+            padding: 5px;
+            background: #222;
+            border: 1px solid #0ff;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .weaponItem.unlocked:hover {
+            background: #333;
+        }
+        .weaponItem.selected {
+            background: #0ff;
+            color: #000;
         }
         #healthBarContainer, #bossHealthBarContainer {
             width: 200px;
@@ -134,20 +218,36 @@
     <div id="startScreen">
         <img id="logo" src="logo1.jpg" alt="Game Logo">
         <button id="startButton">Start Game</button>
+        <button id="settingsButton">Settings</button>
+    </div>
+    <div id="settingsMenu">
+        <p>Game Settings:</p>
+        <button id="controlsButton">Controls</button>
+        <button id="godModeToggle">Enable God Mode</button>
+        <button id="unlockWeaponsToggle">Unlock All Weapons</button>
+    </div>
+    <div id="controlsMenu">
+        <p>Current Controls:</p>
+        <p id="movementControls">Movement: WASD</p>
+        <p>Shoot: Space</p>
+        <p>Boost: Shift</p>
+        <p>Switch Weapon: Q</p>
+        <button id="controlToggle">Switch to Arrow Keys</button>
     </div>
     <div id="settings">
         <label for="volume">Volume: </label>
-        <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
     </div>
     <button id="pauseButton">Pause</button>
+    <button id="quitButton">Quit Game</button>
     <div id="uiContainer">
         <div id="scoreContainer">
             <span>Score:</span>
             <span id="scoreDisplay">0</span>
         </div>
         <div id="weaponContainer">
-            <span>Weapon:</span>
-            <span id="weaponDisplay">Laser</span>
+            <span>Weapons:</span>
+            <div id="weaponList"></div>
         </div>
         <div id="healthContainer">
             <span>Health:</span>
@@ -170,9 +270,18 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const startButton = document.getElementById('startButton');
+        const settingsButton = document.getElementById('settingsButton');
+        const settingsMenu = document.getElementById('settingsMenu');
+        const controlsButton = document.getElementById('controlsButton');
+        const controlsMenu = document.getElementById('controlsMenu');
+        const controlToggle = document.getElementById('controlToggle');
+        const movementControls = document.getElementById('movementControls');
+        const godModeToggle = document.getElementById('godModeToggle');
+        const unlockWeaponsToggle = document.getElementById('unlockWeaponsToggle');
         const pauseButton = document.getElementById('pauseButton');
+        const quitButton = document.getElementById('quitButton');
         const scoreDisplay = document.getElementById('scoreDisplay');
-        const weaponDisplay = document.getElementById('weaponDisplay');
+        const weaponList = document.getElementById('weaponList');
         const volumeControl = document.getElementById('volume');
         const uiContainer = document.getElementById('uiContainer');
         const healthBarContainer = document.getElementById('healthBarContainer');
@@ -203,8 +312,9 @@
         const sounds = [laserSound, missileSound, plasmaSound, boostSound, explosionSound, backgroundMusic, startMusic];
         function updateVolume() {
             const volume = parseFloat(volumeControl.value);
-            sounds.forEach(sound => sound.volume = volume);
-            laserSound.volume = volume * 0.9; // Laser volume reduced by 10%
+            const scaledVolume = volume * volume; // Square the volume for more granular control at low levels
+            sounds.forEach(sound => sound.volume = scaledVolume);
+            laserSound.volume = scaledVolume * 0.9;
         }
         volumeControl.addEventListener('input', updateVolume);
         updateVolume();
@@ -216,6 +326,11 @@
         let boss = null;
         let weaponSwitchTimer = 0;
         let aiBoostDuration = 0;
+        let autoStartTimer = null;
+        let useArrowKeys = false; // Default to WASD
+        let godMode = false; // Invincibility mode
+        let unlockAllWeapons = false; // Unlock all weapons toggle
+        let nextBossScore = 1000; // Boss spawns at 1000 points
 
         const spaceship = {
             x: 100,
@@ -265,32 +380,20 @@
         }
 
         let keys = {
-            w: false,
-            a: false,
-            s: false,
-            d: false,
-            space: false,
-            shift: false,
-            q: false
+            w: false, a: false, s: false, d: false, space: false, shift: false, q: false,
+            ArrowUp: false, ArrowLeft: false, ArrowDown: false, ArrowRight: false
         };
 
-        let retryCount = 0;
         function tryPlayStartMusic() {
-            if (retryCount < 5) {
-                startMusic.play().catch(e => {
-                    console.error('Start music blocked:', e);
-                    retryCount++;
-                    setTimeout(tryPlayStartMusic, 1000);
-                });
-            }
+            startMusic.currentTime = 0;
+            startMusic.play().catch(e => {
+                console.error('Start music blocked:', e);
+                setTimeout(tryPlayStartMusic, 1000);
+            });
         }
-        startMusic.addEventListener('loadeddata', () => {
-            console.log('Start music loaded');
-            tryPlayStartMusic();
-        });
-        startMusic.addEventListener('error', () => console.error('Start music failed to load'));
+        startMusic.addEventListener('loadeddata', tryPlayStartMusic);
 
-        let autoStartTimer = setTimeout(() => {
+        autoStartTimer = setTimeout(() => {
             if (!gameStarted) {
                 aiMode = true;
                 startGame();
@@ -300,13 +403,59 @@
         startButton.addEventListener('click', () => {
             clearTimeout(autoStartTimer);
             startMusic.pause();
+            startMusic.currentTime = 0;
             aiMode = false;
             startGame();
+        });
+
+        settingsButton.addEventListener('click', () => {
+            settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
+            godModeToggle.textContent = godMode ? 'Disable God Mode' : 'Enable God Mode';
+            unlockWeaponsToggle.textContent = unlockAllWeapons ? 'Lock All Weapons' : 'Unlock All Weapons';
+        });
+
+        controlsButton.addEventListener('click', () => {
+            controlsMenu.style.display = 'block';
+            settingsMenu.style.display = 'none';
+            movementControls.textContent = `Movement: ${useArrowKeys ? 'Arrow Keys' : 'WASD'}`;
+        });
+
+        controlToggle.addEventListener('click', () => {
+            useArrowKeys = !useArrowKeys;
+            movementControls.textContent = `Movement: ${useArrowKeys ? 'Arrow Keys' : 'WASD'}`;
+            controlToggle.textContent = useArrowKeys ? 'Switch to WASD' : 'Switch to Arrow Keys';
+            controlsMenu.style.display = 'none';
+        });
+
+        godModeToggle.addEventListener('click', () => {
+            godMode = !godMode;
+            godModeToggle.textContent = godMode ? 'Disable God Mode' : 'Enable God Mode';
+            if (gameStarted && godMode) {
+                spaceship.health = 100;
+                healthBar.style.width = '100%';
+                healthLabel.textContent = '100';
+            }
+            settingsMenu.style.display = 'none';
+        });
+
+        unlockWeaponsToggle.addEventListener('click', () => {
+            unlockAllWeapons = !unlockAllWeapons;
+            unlockWeaponsToggle.textContent = unlockAllWeapons ? 'Lock All Weapons' : 'Unlock All Weapons';
+            if (unlockAllWeapons) {
+                weapons.forEach(weapon => weapon.unlocked = true);
+            } else {
+                weapons.forEach((weapon, index) => {
+                    weapon.unlocked = index === 0 || (score >= 500 && index === 1) || (score >= 1000 && index === 2) || (score >= 1500 && index === 3);
+                });
+            }
+            updateWeaponList();
+            settingsMenu.style.display = 'none';
         });
 
         pauseButton.addEventListener('click', () => {
             gamePaused = !gamePaused;
             pauseButton.textContent = gamePaused ? 'Start' : 'Pause';
+            quitButton.style.display = gamePaused ? 'block' : 'none';
             if (!gamePaused) gameLoop();
             if (aiMode) {
                 startMusic[gamePaused ? 'pause' : 'play']();
@@ -315,48 +464,34 @@
             }
         });
 
+        quitButton.addEventListener('click', () => {
+            resetGame();
+        });
+
         canvas.addEventListener('click', () => {
-            if (aiMode && gameStarted) {
-                gameStarted = false;
-                startMusic.pause();
-                canvas.style.display = 'none';
-                uiContainer.style.display = 'none';
-                pauseButton.style.display = 'none';
-                startScreen.style.display = 'flex';
-                score = 0;
-                spaceship.x = 100;
-                spaceship.y = canvas.height / 2;
-                spaceship.health = 100;
-                enemies.length = 0;
-                projectiles.length = 0;
-                particles.length = 0;
-                powerUps.length = 0;
-                boss = null;
-                currentWeapon = 0;
-                weaponDisplay.textContent = `${weapons[currentWeapon].name}`;
-                scoreDisplay.textContent = `${score}`;
-                healthBar.style.width = '100%';
-                healthLabel.textContent = '100';
-                autoStartTimer = setTimeout(() => {
-                    if (!gameStarted) {
-                        aiMode = true;
-                        startGame();
-                    }
-                }, 30000);
-                tryPlayStartMusic();
+            if (aiMode && gameStarted && !gamePaused) {
+                resetGame();
             }
         });
 
         function startGame() {
             gameStarted = true;
             startScreen.style.display = 'none';
+            settingsMenu.style.display = 'none';
+            controlsMenu.style.display = 'none';
             canvas.style.display = 'block';
             uiContainer.style.display = 'block';
             healthBarContainer.style.display = 'block';
             pauseButton.style.display = 'block';
+            quitButton.style.display = gamePaused ? 'block' : 'none';
+            if (unlockAllWeapons) {
+                weapons.forEach(weapon => weapon.unlocked = true);
+            }
+            updateWeaponList();
             if (aiMode) {
                 startMusic.play();
             } else {
+                backgroundMusic.currentTime = 0;
                 backgroundMusic.play();
             }
             gameLoop();
@@ -364,10 +499,17 @@
 
         document.addEventListener('keydown', (e) => {
             if (!gameStarted) return;
-            if (e.key === 'w' || e.key === 'W') keys.w = true;
-            if (e.key === 's' || e.key === 'S') keys.s = true;
-            if (e.key === 'd' || e.key === 'D') keys.d = true;
-            if (e.key === 'a' || e.key === 'A') keys.a = true;
+            if (!useArrowKeys) {
+                if (e.key === 'w' || e.key === 'W') keys.w = true;
+                if (e.key === 's' || e.key === 'S') keys.s = true;
+                if (e.key === 'd' || e.key === 'D') keys.d = true;
+                if (e.key === 'a' || e.key === 'A') keys.a = true;
+            } else {
+                if (e.key === 'ArrowUp') keys.ArrowUp = true;
+                if (e.key === 'ArrowDown') keys.ArrowDown = true;
+                if (e.key === 'ArrowRight') keys.ArrowRight = true;
+                if (e.key === 'ArrowLeft') keys.ArrowLeft = true;
+            }
             if (e.key === ' ') keys.space = true;
             if (e.key === 'Shift') {
                 keys.shift = true;
@@ -381,10 +523,17 @@
 
         document.addEventListener('keyup', (e) => {
             if (!gameStarted) return;
-            if (e.key === 'w' || e.key === 'W') keys.w = false;
-            if (e.key === 's' || e.key === 'S') keys.s = false;
-            if (e.key === 'd' || e.key === 'D') keys.d = false;
-            if (e.key === 'a' || e.key === 'A') keys.a = false;
+            if (!useArrowKeys) {
+                if (e.key === 'w' || e.key === 'W') keys.w = false;
+                if (e.key === 's' || e.key === 'S') keys.s = false;
+                if (e.key === 'd' || e.key === 'D') keys.d = false;
+                if (e.key === 'a' || e.key === 'A') keys.a = false;
+            } else {
+                if (e.key === 'ArrowUp') keys.ArrowUp = false;
+                if (e.key === 'ArrowDown') keys.ArrowDown = false;
+                if (e.key === 'ArrowRight') keys.ArrowRight = false;
+                if (e.key === 'ArrowLeft') keys.ArrowLeft = false;
+            }
             if (e.key === ' ') keys.space = false;
             if (e.key === 'Shift') {
                 keys.shift = false;
@@ -396,6 +545,7 @@
         function spawnEnemy() {
             if (score < 2000 || !boss) {
                 const swarmChance = Math.random() < 0.1;
+                const lingerChance = Math.random() < 0.1;
                 const count = swarmChance ? Math.floor(Math.random() * 2) + 3 : 1;
                 for (let i = 0; i < count; i++) {
                     const enemy = score < 1000 ? {
@@ -409,7 +559,10 @@
                         damage: 10,
                         direction: Math.random() < 0.5 ? 1 : -1,
                         waveTimer: 0,
-                        crazyFactor: swarmChance ? Math.random() * 2 + 1 : 1
+                        crazyFactor: swarmChance ? Math.random() * 2 + 1 : 1,
+                        isLingering: lingerChance && i === 0,
+                        lingerTimer: lingerChance && i === 0 ? Math.random() * 300 + 300 : 0,
+                        laserCooldown: lingerChance && i === 0 ? 180 : 0
                     } : {
                         x: canvas.width + i * 40,
                         y: Math.random() * (canvas.height / 2),
@@ -421,7 +574,10 @@
                         direction: Math.random() < 0.5 ? 1 : -1,
                         damage: 15,
                         waveTimer: 0,
-                        crazyFactor: swarmChance ? Math.random() * 2 + 1 : 1
+                        crazyFactor: swarmChance ? Math.random() * 2 + 1 : 1,
+                        isLingering: lingerChance && i === 0,
+                        lingerTimer: lingerChance && i === 0 ? Math.random() * 300 + 300 : 0,
+                        laserCooldown: lingerChance && i === 0 ? 180 : 0
                     };
                     enemies.push(enemy);
                 }
@@ -488,10 +644,26 @@
             for (let i = 0; i < weapons.length; i++) {
                 if (!weapons[i].unlocked) {
                     weapons[i].unlocked = true;
-                    weaponDisplay.textContent = `${weapons[i].name}`;
+                    updateWeaponList();
                     break;
                 }
             }
+        }
+
+        function updateWeaponList() {
+            weaponList.innerHTML = '';
+            weapons.forEach((weapon, index) => {
+                const div = document.createElement('div');
+                div.className = `weaponItem ${weapon.unlocked ? 'unlocked' : ''} ${index === currentWeapon ? 'selected' : ''}`;
+                div.textContent = weapon.name;
+                if (weapon.unlocked) {
+                    div.addEventListener('click', () => {
+                        currentWeapon = index;
+                        updateWeaponList();
+                    });
+                }
+                weaponList.appendChild(div);
+            });
         }
 
         let spawnTimer = 0;
@@ -503,7 +675,7 @@
                 if (boss) {
                     if (weapons[0].unlocked && currentWeapon !== 0) {
                         currentWeapon = 0;
-                        weaponDisplay.textContent = `${weapons[currentWeapon].name}`;
+                        updateWeaponList();
                     }
                     targetY = boss.y;
                 } else {
@@ -555,7 +727,7 @@
                         nextWeapon = (nextWeapon + 1) % weapons.length;
                     }
                     currentWeapon = nextWeapon;
-                    weaponDisplay.textContent = `${weapons[currentWeapon].name}`;
+                    updateWeaponList();
                     weaponSwitchTimer = 0;
                 }
             }
@@ -563,10 +735,18 @@
 
         function resetGame() {
             gameStarted = false;
-            backgroundMusic.pause();
+            gamePaused = false;
+            if (aiMode) {
+                startMusic.pause();
+            } else {
+                backgroundMusic.pause();
+            }
             canvas.style.display = 'none';
             uiContainer.style.display = 'none';
             pauseButton.style.display = 'none';
+            quitButton.style.display = 'none';
+            settingsMenu.style.display = 'none';
+            controlsMenu.style.display = 'none';
             startScreen.style.display = 'flex';
             score = 0;
             spaceship.x = 100;
@@ -577,18 +757,33 @@
             particles.length = 0;
             powerUps.length = 0;
             boss = null;
+            bossSpawned = false;
+            nextBossScore = 1000;
             currentWeapon = 0;
-            weaponDisplay.textContent = `${weapons[currentWeapon].name}`;
+            if (!unlockAllWeapons) {
+                weapons[1].unlocked = false;
+                weapons[2].unlocked = false;
+                weapons[3].unlocked = false;
+            }
+            updateWeaponList();
             scoreDisplay.textContent = `${score}`;
             healthBar.style.width = '100%';
             healthLabel.textContent = '100';
+            bossHealthBarContainer.style.display = 'none';
             tryPlayStartMusic();
+            clearTimeout(autoStartTimer);
+            autoStartTimer = setTimeout(() => {
+                if (!gameStarted) {
+                    aiMode = true;
+                    startGame();
+                }
+            }, 30000);
         }
 
         function update() {
             if (!gameStarted || gamePaused) return;
 
-            if (!aiMode && spaceship.health <= 0) {
+            if (!aiMode && !godMode && spaceship.health <= 0) {
                 backgroundMusic.pause();
                 if (confirm('Game Over! Final Score: ' + score + '\nClick OK to return to start screen.')) {
                     resetGame();
@@ -598,38 +793,45 @@
 
             aiControl();
 
-            if (score >= 500 && !weapons[1].unlocked) {
-                weapons[1].unlocked = true;
-                weaponDisplay.textContent = `Missile`;
+            if (!unlockAllWeapons) {
+                if (score >= 500 && !weapons[1].unlocked) {
+                    weapons[1].unlocked = true;
+                    updateWeaponList();
+                }
+                if (score >= 1000 && !weapons[2].unlocked) {
+                    weapons[2].unlocked = true;
+                    updateWeaponList();
+                }
+                if (score >= 1500 && !weapons[3].unlocked) {
+                    weapons[3].unlocked = true;
+                    updateWeaponList();
+                }
             }
-            if (score >= 1000 && !weapons[2].unlocked) {
-                weapons[2].unlocked = true;
-                weaponDisplay.textContent = `Plasma`;
-            }
-            if (score >= 1500 && !weapons[3].unlocked) {
-                weapons[3].unlocked = true;
-                weaponDisplay.textContent = `Super`;
-            }
+
+            let upKey = useArrowKeys ? keys.ArrowUp : keys.w;
+            let downKey = useArrowKeys ? keys.ArrowDown : keys.s;
+            let rightKey = useArrowKeys ? keys.ArrowRight : keys.d;
+            let leftKey = useArrowKeys ? keys.ArrowLeft : keys.a;
 
             let currentMaxSpeed = keys.shift ? spaceship.boostSpeed : spaceship.maxSpeed;
             if (spaceship.speedBoostTimer > 0) {
                 currentMaxSpeed *= 1.5;
                 spaceship.speedBoostTimer--;
             }
-            if ((keys.d || keys.shift) && spaceship.speed < currentMaxSpeed) {
+            if ((rightKey || keys.shift) && spaceship.speed < currentMaxSpeed) {
                 spaceship.speed += spaceship.acceleration;
             }
-            if (keys.a && spaceship.speed > 0) {
+            if (leftKey && spaceship.speed > 0) {
                 spaceship.speed -= spaceship.acceleration * 2;
             } else if (spaceship.speed > 0) {
                 spaceship.speed -= spaceship.friction;
             }
             if (spaceship.speed < 0) spaceship.speed = 0;
 
-            if (keys.w && spaceship.y > spaceship.height) {
+            if (upKey && spaceship.y > spaceship.height) {
                 spaceship.y -= keys.shift ? 3 : 3.75;
             }
-            if (keys.s && spaceship.y < canvas.height - spaceship.height) {
+            if (downKey && spaceship.y < canvas.height - spaceship.height) {
                 spaceship.y += keys.shift ? 5 : 3.75;
             }
 
@@ -650,13 +852,13 @@
             }
 
             if (keys.shift) {
-                if (keys.d && spaceship.x < canvas.width - spaceship.width && spaceship.boostExhaustionTimer <= 0) {
+                if (rightKey && spaceship.x < canvas.width - spaceship.width && spaceship.boostExhaustionTimer <= 0) {
                     spaceship.x += spaceship.speed;
                 }
-                if (keys.a && spaceship.x > 0) {
+                if (leftKey && spaceship.x > 0) {
                     spaceship.x -= spaceship.speed;
                 }
-                if (!keys.d && !keys.a && spaceship.x > spaceship.baseX) {
+                if (!rightKey && !leftKey && spaceship.x > spaceship.baseX) {
                     spaceship.x -= 2;
                     if (spaceship.x < spaceship.baseX) spaceship.x = spaceship.baseX;
                 }
@@ -679,7 +881,7 @@
                     nextWeapon = (nextWeapon + 1) % weapons.length;
                 }
                 currentWeapon = nextWeapon;
-                weaponDisplay.textContent = `${weapons[currentWeapon].name}`;
+                updateWeaponList();
                 spaceship.weaponCooldown = 10;
             }
 
@@ -702,7 +904,8 @@
                                 color: weapon.color,
                                 score: weapon.score,
                                 speedX: Math.cos(rad) * 12.5,
-                                speedY: Math.sin(rad) * 12.5
+                                speedY: Math.sin(rad) * 12.5,
+                                fromPlayer: true
                             });
                         }
                     } else {
@@ -714,7 +917,8 @@
                             width: 8,
                             height: 2,
                             color: weapon.color,
-                            score: weapon.score
+                            score: weapon.score,
+                            fromPlayer: true
                         });
                     }
                 } else if (weapon.name === 'Missile' && enemies.length > 0) {
@@ -730,7 +934,8 @@
                         size: 6,
                         target: target1,
                         color: weapon.color,
-                        score: weapon.score
+                        score: weapon.score,
+                        fromPlayer: true
                     });
                     projectiles.push({
                         type: 'missile',
@@ -740,7 +945,8 @@
                         size: 6,
                         target: target2,
                         color: weapon.color,
-                        score: weapon.score
+                        score: weapon.score,
+                        fromPlayer: true
                     });
                 } else if (weapon.name === 'Plasma') {
                     plasmaSound.currentTime = 0;
@@ -754,7 +960,8 @@
                         maxRadius: 75,
                         life: 30,
                         color: weapon.color,
-                        score: weapon.score
+                        score: weapon.score,
+                        fromPlayer: true
                     });
                 } else if (weapon.name === 'Super') {
                     projectiles.push({
@@ -766,7 +973,8 @@
                         maxRadius: 100,
                         life: 30,
                         color: weapon.color,
-                        score: weapon.score
+                        score: weapon.score,
+                        fromPlayer: true
                     });
                 }
                 spaceship.weaponCooldown = weapon.cooldown;
@@ -800,7 +1008,7 @@
                     proj.life--;
                     if (proj.life <= 0 || proj.x > canvas.width) {
                         if (proj.type === 'plasma' && proj.life <= 0) {
-                            createExplosion(proj.x, proj.y, 4); // Larger explosion
+                            createExplosion(proj.x, proj.y, 4);
                             for (let j = enemies.length - 1; j >= 0; j--) {
                                 const enemy = enemies[j];
                                 const dx = proj.x - (enemy.x + enemy.size / 2);
@@ -820,6 +1028,18 @@
                 if (proj.type !== 'super' && proj.type !== 'plasma' && (proj.x > canvas.width || proj.x < 0)) {
                     projectiles.splice(i, 1);
                 }
+
+                if (!proj.fromPlayer && 
+                    proj.x < spaceship.x + spaceship.width &&
+                    proj.x + proj.width > spaceship.x &&
+                    proj.y < spaceship.y + spaceship.height/2 &&
+                    proj.y + proj.height > spaceship.y - spaceship.height/2 &&
+                    spaceship.shieldTimer <= 0 && !godMode && !aiMode) {
+                    spaceship.health -= 10;
+                    healthBar.style.width = `${spaceship.health}%`;
+                    healthLabel.textContent = `${Math.max(0, spaceship.health)}`;
+                    projectiles.splice(i, 1);
+                }
             }
 
             spawnTimer++;
@@ -828,8 +1048,9 @@
                 spawnTimer = 0;
             }
 
-            if (score >= 1000 && !boss && !bossSpawned) {
+            if (score >= nextBossScore && !boss && !bossSpawned) {
                 spawnBoss();
+                nextBossScore += 1000;
             }
 
             if (boss) {
@@ -846,9 +1067,10 @@
                         width: 12,
                         height: 4,
                         color: 'green',
-                        score: 0
+                        score: 0,
+                        fromPlayer: false
                     });
-                    boss.laserCooldown = 90; // Faster shooting
+                    boss.laserCooldown = 30;
                 }
                 boss.laserCooldown--;
 
@@ -876,7 +1098,7 @@
                         }
                     }
 
-                    if (hit && proj.score > 0) {
+                    if (hit && proj.fromPlayer) {
                         boss.health -= proj.score;
                         if (proj.type !== 'super' && proj.type !== 'plasma') {
                             projectiles.splice(i, 1);
@@ -892,7 +1114,7 @@
                             boss = null;
                             bossSpawned = false;
                             if (aiMode) {
-                                setTimeout(() => canvas.click(), 2000);
+                                resetGame(); // AI mode resets to start screen after boss defeat
                             }
                         } else {
                             createExplosion(proj.x, proj.y);
@@ -902,7 +1124,7 @@
                     }
                 }
 
-                if (spaceship.shieldTimer <= 0 &&
+                if (spaceship.shieldTimer <= 0 && !godMode &&
                     boss.x < spaceship.x + spaceship.width &&
                     boss.x + boss.width > spaceship.x &&
                     boss.y - boss.height/2 < spaceship.y + spaceship.height/2 &&
@@ -918,7 +1140,26 @@
             for (let i = enemies.length - 1; i >= 0; i--) {
                 const enemy = enemies[i];
                 enemy.waveTimer += 0.05;
-                if (score < 1000) {
+                if (enemy.isLingering && enemy.lingerTimer > 0) {
+                    enemy.x -= enemy.speed * 0.1;
+                    enemy.y += Math.sin(enemy.waveTimer) * 2 * enemy.crazyFactor;
+                    enemy.lingerTimer--;
+                    if (enemy.laserCooldown <= 0) {
+                        projectiles.push({
+                            type: 'laser',
+                            x: enemy.x,
+                            y: enemy.y + enemy.size / 2,
+                            speed: -2,
+                            width: 8,
+                            height: 2,
+                            color: 'yellow',
+                            score: 0,
+                            fromPlayer: false
+                        });
+                        enemy.laserCooldown = 180;
+                    }
+                    enemy.laserCooldown--;
+                } else if (score < 1000) {
                     enemy.y += Math.sin(enemy.waveTimer) * 2 * enemy.crazyFactor + (enemy.y < spaceship.y ? 1 : -1);
                     enemy.speedVariationTimer++;
                     if (enemy.speedVariationTimer >= enemy.speedVariationInterval) {
@@ -941,7 +1182,7 @@
                     enemy.speed = enemy.baseSpeed + Math.sin(Date.now() * 0.01) * 2 * enemy.crazyFactor;
                 }
 
-                if (spaceship.shieldTimer <= 0 &&
+                if (spaceship.shieldTimer <= 0 && !godMode &&
                     enemy.x < spaceship.x + spaceship.width &&
                     enemy.x + enemy.size > spaceship.x &&
                     enemy.y < spaceship.y + spaceship.height/2 &&
@@ -983,7 +1224,7 @@
                         }
                     }
 
-                    if (hit) {
+                    if (hit && proj.fromPlayer) {
                         explosionSound.currentTime = 0;
                         explosionSound.play();
                         createExplosion(enemy.x + enemy.size/2, enemy.y + enemy.size/2);
@@ -1032,7 +1273,7 @@
 
             if (!aiMode) {
                 healthBar.style.width = `${spaceship.health}%`;
-                healthLabel.textContent = `${Math.max(0, spaceship.health)}`;
+                healthLabel.textContent = godMode ? '∞' : `${Math.max(0, spaceship.health)}`;
             } else {
                 healthBar.style.width = '100%';
                 healthLabel.textContent = '∞';
@@ -1059,8 +1300,8 @@
                 spaceship.height
             );
 
-            if (spaceship.shieldTimer > 0) {
-                ctx.strokeStyle = 'blue';
+            if (spaceship.shieldTimer > 0 || godMode) {
+                ctx.strokeStyle = godMode ? 'gold' : 'blue';
                 ctx.lineWidth = 2;
                 ctx.beginPath();
                 ctx.arc(spaceship.x + spaceship.width / 2, spaceship.y, 25, 0, Math.PI * 2);
