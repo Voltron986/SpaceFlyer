@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sideways Spaceship Game</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="main-background" id="mainBackground"></div>
+    <div class="background-layer" id="backgroundLayer"></div>
+    <div class="scene" id="scene">
+        <div class="banner" id="banner1">
+            <div class="slider" id="first-slider" style="--quantity: 10">
+                <div class="item" style="--position: 1"><img src="img1.jpg" alt="Image 1"></div>
+                <div class="item" style="--position: 2"><img src="img2.jpg" alt="Image 2"></div>
+                <div class="item" style="--position: 3"><img src="img3.jpg" alt="Image 3"></div>
+                <div class="item" style="--position: 4"><img src="img4.jpg" alt="Image 4"></div>
+                <div class="item" style="--position: 5"><img src="img5.jpg" alt="Image 5"></div>
+                <div class="item" style="--position: 6"><img src="img6.jpg" alt="Image 6"></div>
+                <div class="item" style="--position: 7"><img src="img7.jpg" alt="Image 7"></div>
+                <div class="item" style="--position: 8"><img src="img8.jpg" alt="Image 8"></div>
+                <div class="item" style="--position: 9"><img src="img9.jpg" alt="Image 9"></div>
+                <div class="item" style="--position: 10"><img src="img10.jpg" alt="Image 10"></div>
+            </div>
+        </div>
+
+        <div class="banner" id="banner2">
+            <div class="slider" id="second-slider" style="--quantity: 10">
+                <div class="item" style="--position: 1"><img src="img11.jpg" alt="Image 11"></div>
+                <div class="item" style="--position: 2"><img src="img12.jpg" alt="Image 12"></div>
+                <div class="item" style="--position: 3"><img src="img13.jpg" alt="Image 13"></div>
+                <div class="item" style="--position: 4"><img src="img14.jpg" alt="Image 14"></div>
+                <div class="item" style="--position: 5"><img src="img15.jpg" alt="Image 15"></div>
+                <div class="item" style="--position: 6"><img src="img16.jpg" alt="Image 16"></div>
+                <div class="item" style="--position: 7"><img src="img17.jpg" alt="Image 17"></div>
+                <div class="item" style="--position: 8"><img src="img18.jpg" alt="Image 18"></div>
+                <div class="item" style="--position: 9"><img src="img19.jpg" alt="Image 19"></div>
+                <div class="item" style="--position: 10"><img src="img20.jpg" alt="Image 20"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard collapsed" id="dashboard">
+        <div class="options-container">
+            <button id="optionsBtn">Options</button>
+            <div class="options-menu" id="optionsMenu">
+                <button id="mediaBtn">Add/Delete Media</button>
+                <button id="fullscreenBtn">Full Screen</button>
+                <button id="gradientSettingsBtn">Gradient Settings</button>
+                <button id="directionToggleBtn">Reverse Direction</button>
+                <button id="slidersBtn">Sliders</button>
+            </div>
+            <div class="media-menu" id="mediaMenu">
+                <button id="addPicture">Add Image/Video</button>
+                <button id="addMp3">Add MP3</button>
+                <button id="addFolder">Add Folder</button>
+                <button id="addXPost">Add X Post</button>
+                <button id="bgToggleBtn">Add Background</button>
+                <button id="deletePicture">Delete Media</button>
+                <button id="replacePicture">Replace Media</button>
+            </div>
+            <div class="slider-menu" id="sliderMenu">
+                <div class="control-row">
+                    <label for="zoomSlider">Zoom</label>
+                    <input type="range" id="zoomSlider" min="0" max="100" value="100">
+                    <span id="zoomValue">100%</span>
+                </div>
+                <div class="control-row">
+                    <label for="speedSlider">Spin Speed</label>
+                    <input type="range" id="speedSlider" min="0" max="100" value="50">
+                    <span id="speedValue">50%</span>
+                </div>
+                <div class="control-row">
+                    <label for="sizeSlider">Carousel Radius</label>
+                    <input type="range" id="sizeSlider" min="460" max="1200" value="700">
+                    <span id="sizeValue">29%</span>
+                </div>
+                <div class="control-row">
+                    <label for="spacingSlider">Vertical Spacing</label>
+                    <input type="range" id="spacingSlider" min="80" max="200" value="120">
+                    <span id="spacingValue">33%</span>
+                </div>
+                <div class="control-row">
+                    <label for="bgOpacitySlider">Background Opacity</label>
+                    <input type="range" id="bgOpacitySlider" min="0" max="100" value="0">
+                    <span id="bgOpacityValue">0%</span>
+                </div>
+                <div class="control-row">
+                    <label for="buttonColorPicker">Button Color</label>
+                    <input type="color" id="buttonColorPicker" value="#ff0000">
+                </div>
+            </div>
+        </div>
+        <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.mp4" style="display: none;">
+        <input type="file" id="mp3Input" accept=".mp3" style="display: none;">
+        <input type="file" id="folderInput" webkitdirectory accept=".mp3" style="display: none;">
+        <input type="file" id="bgImageInput" accept=".jpg,.jpeg,.png" style="display: none;">
+        <input type="file" id="replaceInput" accept=".jpg,.jpeg,.png,.mp4,.mp3" style="display: none;">
+    </div>
+    <div class="gradient-settings" id="gradientSettings">
+        <h3>Gradient Settings</h3>
+        <div class="control-row">
+            <label for="gradientSpeed">Speed (seconds)</label>
+            <input type="range" id="gradientSpeed" min="20" max="120" value="45">
+            <span id="gradientSpeedValue">25%</span>
+        </div>
+        <div class="control-row">
+            <label>Colors (click to change):</label>
+            <div id="colorPickers">
+                <input type="color" class="color-picker" value="#ff7e5f">
+                <input type="color" class="color-picker" value="#feb47b">
+                <input type="color" class="color-picker" value="#6a11cb">
+                <input type="color" class="color-picker" value="#2575fc">
+                <input type="color" class="color-picker" value="#ff512f">
+                <input type="color" class="color-picker" value="#dd2476">
+                <input type="color" class="color-picker" value="#00ffcc">
+                <input type="color" class="color-picker" value="#00cc99">
+                <input type="color" class="color-picker" value="#ffcc00">
+                <input type="color" class="color-picker" value="#ff6699">
+            </div>
+        </div>
+        <button id="closeGradientSettings">Close</button>
+    </div>
+
+    <div id="mediaContainer" class="media-container">
+        <img id="enlargedImg" src="" alt="Enlarged Image" style="display: none;">
+        <video id="videoPlayer" controls autoplay style="display: none;"></video>
+        <div id="audioPlayer" class="audio-player" style="display: none;">
+            <button id="closeAudioBtn" class="close-btn">X</button>
+            <img id="albumArt" src="" alt="Album Art" class="album-art">
+            <div id="songInfoPlayer" class="song-info-player">Unknown Song</div>
+            <audio id="audioElement" controls></audio>
+            <div class="audio-controls">
+                <div class="button-row">
+                    <button id="prevBtn">⏮</button>
+                    <button id="rewindBtn">⏪</button>
+                    <button id="playPauseBtn">▶️</button>
+                    <button id="forwardBtn">⏩</button>
+                    <button id="nextBtn">⏭</button>
+                    <button id="shuffleBtn">🔀</button>
+                </div>
+                <div class="progress-container">
+                    <span id="currentTime">0:00</span>
+                    <input type="range" id="progressSlider" min="0" max="100" value="0">
+                    <span id="duration">0:00</span>
+                </div>
+                <div class="control-row">
+                    <label for="volumeSlider">Volume</label>
+                    <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="miniAudioPlayer" class="mini-audio-player" style="display: none;">
+        <img id="miniAlbumArt" src="" alt="Mini Album Art">
+        <div class="mini-song-info" id="miniSongInfo">Unknown Song</div>
+        <div class="mini-controls">
+            <button id="miniPrevBtn">⏮</button>
+            <button id="miniPlayPauseBtn">▶️</button>
+            <button id="miniNextBtn">⏭</button>
+            <span id="miniCurrentTime">0:00</span>
+            <input type="range" id="miniProgressSlider" min="0" max="100" value="0">
+            <span id="miniDuration">0:00</span>
+            <div class="volume-container">
+                <button id="volumeBtn">🔊</button>
+                <input type="range" id="miniVolumeSlider" min="0" max="1" step="0.01" value="0.2">
+            </div>
+            <button id="miniShuffleBtn">🔀</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
