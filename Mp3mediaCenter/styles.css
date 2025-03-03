@@ -104,7 +104,7 @@ body {
 
 .mp3-card {
     position: relative;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(87, 86, 86, 0.8);
     border-radius: 10px;
     overflow: hidden;
     display: flex;
@@ -129,7 +129,7 @@ body {
 .mp3-card .song-info {
     padding: 10px;
     background: rgba(0, 0, 0, 0.6);
-    font-size: 14px;
+    font-size: 16px;
     text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
     z-index: 1;
 }
@@ -146,9 +146,9 @@ body {
     text-align: left;
     font-family: 'Arial', sans-serif;
     padding: 10px;
-    user-select: none; /* Prevent text selection */
-    -webkit-user-select: none; /* Safari */
-    pointer-events: auto; /* Ensure clicks register */
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: auto;
 }
 
 .x-post-card .post-content {
@@ -206,10 +206,10 @@ body {
     bottom: 20px;
     right: 20px;
     z-index: 1000;
-    background: rgba(0, 0, 0, 0.8);
+    background: linear-gradient(135deg, #ff000033, #cc000033); /* Default semi-transparent */
     padding: 15px;
     border-radius: 15px;
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 1);
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -240,6 +240,7 @@ body {
 
 .options-container { position: relative; }
 
+/* Sub-menus */
 .options-menu,
 .slider-menu,
 .media-menu {
@@ -247,16 +248,15 @@ body {
     position: absolute;
     bottom: 100%;
     right: 0;
-    background: rgba(0, 0, 0, 0.95);
-    padding: 20px;
+    background: linear-gradient(135deg, #ff000033, #cc000033); /* Default semi-transparent */
+    padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 1);
     flex-direction: column;
     gap: 15px;
     width: 220px;
     border: 1px solid rgba(255, 0, 0, 0.3);
 }
-
 .dashboard label {
     color: #fff;
     font-family: 'Arial', sans-serif;
@@ -276,8 +276,9 @@ body {
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.8);
     transition: all 0.3s ease;
+    margin-bottom: 10px;
 }
 
 .options-menu button {
@@ -338,7 +339,7 @@ body {
     bottom: 200px;
     right: 20px;
     z-index: 1001;
-    background: rgba(0, 0, 0, 0.9);
+    background: linear-gradient(135deg, #ff000033, #cc000033); /* Default semi-transparent */
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
@@ -374,7 +375,161 @@ body {
     display: none;
     flex-direction: column;
     align-items: center;
-    background: rgba(0, 0, 0, 0.9);
+    background: linear-gradient(135deg, #ff000033, #cc000033); /* Default semi-transparent */
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.
+    box-shadow: 0 0 20px rgba(187, 0, 0, 0.9);
+}
+.audio-controls {
+    display: flex;
+    justify-content: center;
+    background-color: #000;
+}
+/* Mini Audio Player Styles */
+#miniAudioPlayer {
+    display: none;
+    flex-direction: column; /* Changed to stack progress bar above buttons */
+    align-items: flex-start;
+    background: rgba(85, 85, 85, 0.9);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(187, 0, 0, 0.7);
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 500px;
+    height: 60px;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+#miniAlbumArt {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+#miniSongInfo {
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+
+.mini-controls {
+    display: flex;
+    gap: 5px;
+}
+
+#miniPlayPauseBtn, #miniPrevBtn, #miniNextBtn, #miniShuffleBtn, #volumeBtn {
+    background: linear-gradient(135deg, #ff0000, #cc0000); /* Default, will be updated by JS */
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    width: 30px; /* Square shape */
+    height: 30px; /* Square shape */
+    border-radius: 8px; /* Rounded edges */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+#miniPlayPauseBtn:hover, #miniPrevBtn:hover, #miniNextBtn:hover, #miniShuffleBtn:hover, #volumeBtn:hover {
+    transform: scale(1.1); /* Slightly smaller scale for square buttons */
+}
+
+#miniProgressSlider, #miniVolumeSlider {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 150px; /* Wider for better visibility */
+    height: 4px;
+    background: linear-gradient(135deg, #ff0000, #cc0000); /* Default, updated by JS */
+    border-radius: 2px;
+    outline: none;
+    margin: 5px 0; /* Space above and below */
+}
+
+#miniProgressSlider::-webkit-slider-thumb, #miniVolumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+}
+
+#miniCurrentTime, #miniDuration {
+    color: #fff;
+    font-size: 12px;
+    font-family: 'Arial', sans-serif;
+    margin: 0 5px;
+}
+
+#miniVolumeSlider {
+    display: none;
+    position: absolute;
+    bottom: 70px;
+    right: 10px;
+    width: 100px;
+}
+
+
+  
+body {
+    background: linear-gradient(45deg, #6a11cb, #2575fc); /* Gradient background */
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: flex-start; /* Align clock to the top */
+    align-items: center; /* Center clock horizontally */
+    height: 100vh; /* Full height of the screen */
+    margin: 0;
+  }
+
+  /* Styling for the clock container */
+  #clock {
+    font-size: 5rem;  /* Large font size */
+    font-weight: bold;
+    color: white;
+    background: rgba(0, 0, 0, 0.4); /* Transparent black background */
+    padding: 20px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    display: flex;
+    align-items: center; /* Center content vertically inside the clock */
+    justify-content: center; /* Center content horizontally inside the clock */
+    transition: 0.3s ease-in-out; /* Smooth transition for color change */
+    margin-top: 20px; /* Adds a little space from the top */
+  }
+
+  /* Hover effect for clock */
+  #clock:hover {
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Blinking colon effect for separation */
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* Extra touch for smaller screens */
+  @media (max-width: 600px) {
+    #clock {
+      font-size: 4rem;
+      padding: 15px 30px;
+    }
+  }
