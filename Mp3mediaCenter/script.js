@@ -1,3 +1,41 @@
+// Drag-and-drop support for file uploads
+document.body.addEventListener('dragover', (e) => e.preventDefault());
+document.body.addEventListener('drop', (e) => {
+    e.preventDefault();
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        const fileInput = document.getElementById('fileInput');
+        const mp3Input = document.getElementById('mp3Input');
+        const droppedFiles = Array.from(files);
+
+        // Separate MP3s from images/videos
+        const mp3Files = droppedFiles.filter(file => file.type === 'audio/mpeg');
+        const mediaFiles = droppedFiles.filter(file => 
+            file.type === 'image/jpeg' || 
+            file.type === 'image/png' || 
+            file.type === 'video/mp4'
+        );
+
+        // Handle images/videos
+        if (mediaFiles.length > 0) {
+            fileInput.files = new DataTransfer().files; // Clear previous files
+            const dataTransfer = new DataTransfer();
+            mediaFiles.forEach(file => dataTransfer.items.add(file));
+            fileInput.files = dataTransfer.files;
+            fileInput.dispatchEvent(new Event('change')); // Trigger existing logic
+        }
+
+        // Handle MP3s (one at a time, as per your original logic)
+        if (mp3Files.length > 0) {
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(mp3Files[0]); // Only first MP3 for simplicity
+            mp3Input.files = dataTransfer.files;
+            mp3Input.dispatchEvent(new Event('change')); // Trigger existing logic
+        }
+    }
+});
+
+// Clock functionality
 function updateClock() {
     const now = new Date();
     
@@ -12,11 +50,10 @@ function updateClock() {
     const timeString = hours + ':' + minutes + ':' + seconds;
 
     document.getElementById('clock').textContent = timeString;
-  }
+}
 
-  setInterval(updateClock, 1000);
-  updateClock();  // Call immediately to avoid initial delay
-
+setInterval(updateClock, 1000);
+updateClock();  // Call immediately to avoid initial delay
 
 // First slider controls
 const firstSlider = document.querySelector('#first-slider');
@@ -268,13 +305,10 @@ const volumeBtn = document.getElementById('volumeBtn');
 const miniVolumeSlider = document.getElementById('miniVolumeSlider');
 const miniShuffleBtn = document.getElementById('miniShuffleBtn');
 const audioControls = document.querySelector('.audio-controls');
-// Add event listeners or other functionality
 
 let playlist = [];
 let currentTrackIndex = -1;
 let isShuffled = false;
-
-
 
 // Set initial volume to 20%
 audioElement.volume = 0.2;
@@ -1071,7 +1105,6 @@ function playTrack(index) {
     playPauseBtn.textContent = '⏸️';
     miniPlayPauseBtn.textContent = '⏸️';
 }
-
 
 // Mini audio player controls
 miniPlayPauseBtn.addEventListener('click', () => {
