@@ -9,13 +9,17 @@ document.body.addEventListener('drop', (e) => {
         const droppedFiles = Array.from(files);
 
         // Separate MP3s from images/videos
-        const mp3Files = droppedFiles.filter(file => file.type === 'audio/mpeg');
+        const mp3Files = droppedFiles.filter(file => file.type === 'audio/mpeg' || file.name.endsWith('.mp3'));
         const mediaFiles = droppedFiles.filter(file => 
             file.type === 'image/jpeg' || 
             file.type === 'image/png' || 
             file.type === 'video/mp4' || 
-            file.type === 'video/x-matroska' // Added MKV support
+            file.type === 'video/x-matroska' || 
+            file.name.endsWith('.mp4') || 
+            file.name.endsWith('.mkv') // Added extension check
         );
+
+        console.log('Dropped files:', droppedFiles.map(f => ({ name: f.name, type: f.type }))); // Debug log
 
         // Handle images/videos
         if (mediaFiles.length > 0) {
@@ -611,9 +615,13 @@ fileInput.addEventListener('change', (e) => {
         file.type === 'image/jpeg' || 
         file.type === 'image/png' || 
         file.type === 'video/mp4' || 
-        file.type === 'video/x-matroska' // Added MKV support
+        file.type === 'video/x-matroska' || 
+        file.name.endsWith('.mp4') || 
+        file.name.endsWith('.mkv') // Added extension check
     );
     if (!files.length) return;
+
+    console.log('Selected files:', files.map(f => ({ name: f.name, type: f.type }))); // Debug log
 
     let remainingFiles = files.slice();
     const sliders = document.querySelectorAll('.slider');
@@ -623,12 +631,12 @@ fileInput.addEventListener('change', (e) => {
         for (let i = 0; i < emptyItems.length && remainingFiles.length > 0; i++) {
             const file = remainingFiles.shift();
             const item = emptyItems[i];
-            if (file.type.startsWith('image/')) {
+            if (file.type.startsWith('image/') || file.name.endsWith('.jpg') || file.name.endsWith('.jpeg') || file.name.endsWith('.png')) {
                 const img = document.createElement('img');
                 img.src = URL.createObjectURL(file);
                 img.alt = `Uploaded Image`;
                 item.appendChild(img);
-            } else if (file.type === 'video/mp4' || file.type === 'video/x-matroska') { // Handle both MP4 and MKV
+            } else if (file.type === 'video/mp4' || file.type === 'video/x-matroska' || file.name.endsWith('.mp4') || file.name.endsWith('.mkv')) { // Handle both MP4 and MKV
                 const video = document.createElement('video');
                 video.src = URL.createObjectURL(file);
                 video.muted = true;
@@ -636,6 +644,7 @@ fileInput.addEventListener('change', (e) => {
                 video.playsinline = true;
                 video.preload = 'auto';
                 item.appendChild(video);
+                console.log('Added video:', file.name); // Debug log
             }
         }
         if (remainingFiles.length === 0) break;
@@ -648,12 +657,12 @@ fileInput.addEventListener('change', (e) => {
         const filesToAdd = remainingFiles.splice(0, Math.min(emptyItems.length, remainingFiles.length));
         filesToAdd.forEach((file, index) => {
             const item = emptyItems[index];
-            if (file.type.startsWith('image/')) {
+            if (file.type.startsWith('image/') || file.name.endsWith('.jpg') || file.name.endsWith('.jpeg') || file.name.endsWith('.png')) {
                 const img = document.createElement('img');
                 img.src = URL.createObjectURL(file);
                 img.alt = `Uploaded Image`;
                 item.appendChild(img);
-            } else if (file.type === 'video/mp4' || file.type === 'video/x-matroska') { // Handle both MP4 and MKV
+            } else if (file.type === 'video/mp4' || file.type === 'video/x-matroska' || file.name.endsWith('.mp4') || file.name.endsWith('.mkv')) { // Handle both MP4 and MKV
                 const video = document.createElement('video');
                 video.src = URL.createObjectURL(file);
                 video.muted = true;
@@ -661,6 +670,7 @@ fileInput.addEventListener('change', (e) => {
                 video.playsinline = true;
                 video.preload = 'auto';
                 item.appendChild(video);
+                console.log('Added video to new slider:', file.name); // Debug log
             }
         });
     }
@@ -768,14 +778,14 @@ replaceInput.addEventListener('change', (e) => {
                 replaceMp3(item, file, 'default-album-art.jpg', file.name, 'Unknown Album');
             }
         });
-    } else if (file.type.startsWith('image/') || file.type === 'video/mp4' || file.type === 'video/x-matroska') { // Added MKV support
+    } else if (file.type.startsWith('image/') || file.type === 'video/mp4' || file.type === 'video/x-matroska' || file.name.endsWith('.mp4') || file.name.endsWith('.mkv')) { // Added MKV support
         while (item.firstChild) item.removeChild(item.firstChild);
-        if (file.type.startsWith('image/')) {
+        if (file.type.startsWith('image/') || file.name.endsWith('.jpg') || file.name.endsWith('.jpeg') || file.name.endsWith('.png')) {
             const img = document.createElement('img');
             img.src = URL.createObjectURL(file);
             img.alt = `Replaced Image`;
             item.appendChild(img);
-        } else if (file.type === 'video/mp4' || file.type === 'video/x-matroska') { // Handle both MP4 and MKV
+        } else if (file.type === 'video/mp4' || file.type === 'video/x-matroska' || file.name.endsWith('.mp4') || file.name.endsWith('.mkv')) { // Handle both MP4 and MKV
             const video = document.createElement('video');
             video.src = URL.createObjectURL(file);
             video.muted = true;
@@ -784,6 +794,7 @@ replaceInput.addEventListener('change', (e) => {
             video.preload = 'auto';
             item.appendChild(video);
             if (item.closest('.slider.visible')) video.play();
+            console.log('Replaced with video:', file.name); // Debug log
         }
     }
 
