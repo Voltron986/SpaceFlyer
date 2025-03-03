@@ -13,7 +13,8 @@ document.body.addEventListener('drop', (e) => {
         const mediaFiles = droppedFiles.filter(file => 
             file.type === 'image/jpeg' || 
             file.type === 'image/png' || 
-            file.type === 'video/mp4'
+            file.type === 'video/mp4' || 
+            file.type === 'video/x-matroska' // Added MKV support
         );
 
         // Handle images/videos
@@ -609,7 +610,8 @@ fileInput.addEventListener('change', (e) => {
     const files = Array.from(e.target.files).filter(file => 
         file.type === 'image/jpeg' || 
         file.type === 'image/png' || 
-        file.type === 'video/mp4'
+        file.type === 'video/mp4' || 
+        file.type === 'video/x-matroska' // Added MKV support
     );
     if (!files.length) return;
 
@@ -626,7 +628,7 @@ fileInput.addEventListener('change', (e) => {
                 img.src = URL.createObjectURL(file);
                 img.alt = `Uploaded Image`;
                 item.appendChild(img);
-            } else if (file.type === 'video/mp4') {
+            } else if (file.type === 'video/mp4' || file.type === 'video/x-matroska') { // Handle both MP4 and MKV
                 const video = document.createElement('video');
                 video.src = URL.createObjectURL(file);
                 video.muted = true;
@@ -651,7 +653,7 @@ fileInput.addEventListener('change', (e) => {
                 img.src = URL.createObjectURL(file);
                 img.alt = `Uploaded Image`;
                 item.appendChild(img);
-            } else if (file.type === 'video/mp4') {
+            } else if (file.type === 'video/mp4' || file.type === 'video/x-matroska') { // Handle both MP4 and MKV
                 const video = document.createElement('video');
                 video.src = URL.createObjectURL(file);
                 video.muted = true;
@@ -766,14 +768,14 @@ replaceInput.addEventListener('change', (e) => {
                 replaceMp3(item, file, 'default-album-art.jpg', file.name, 'Unknown Album');
             }
         });
-    } else if (file.type.startsWith('image/') || file.type === 'video/mp4') {
+    } else if (file.type.startsWith('image/') || file.type === 'video/mp4' || file.type === 'video/x-matroska') { // Added MKV support
         while (item.firstChild) item.removeChild(item.firstChild);
         if (file.type.startsWith('image/')) {
             const img = document.createElement('img');
             img.src = URL.createObjectURL(file);
             img.alt = `Replaced Image`;
             item.appendChild(img);
-        } else if (file.type === 'video/mp4') {
+        } else if (file.type === 'video/mp4' || file.type === 'video/x-matroska') { // Handle both MP4 and MKV
             const video = document.createElement('video');
             video.src = URL.createObjectURL(file);
             video.muted = true;
